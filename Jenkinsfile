@@ -8,7 +8,7 @@ def defaultBranchRegex = "master"
 // Maven Config
 def mavenArgs = "-B -U -Dci=true -Dmaven.test.failure.ignore"
 def mavenVaildateProjectGoals = "clean validate"
-def mavenDefaultGoals = "-DreleaseVersion=${ -> version} -DdevelopmentVersion=${ -> pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
+def mavenDefaultGoals = "-DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
 def mavenNonDefaultGoals = "verify"
 
 // Pipeline Definition
@@ -39,9 +39,11 @@ node("docker") {
 
             // Actually build the project
             stage("Build Project") {
-                sh "mvn ${mavenArgs} ${isDefaultBranch ? mavenDefaultGoals : mavenNonDefaultGoals}"
                 if (isDefaultBranch) {
+                    sh "mvn ${mavenArgs} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version} ${mavenDefaultGoals}"
                     sh "git push ${pom.artifactId}-${version}"
+                } else {
+                    sh "mvn ${mavenArgs} ${mavenNonDefaultGoals}"
                 }
             }
         }
