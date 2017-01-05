@@ -22,8 +22,8 @@ node("docker") {
 
     buildEnv.inside {
         withMaven(localRepo: ".m2/repository", globalMavenSettingsConfig: "maven-dragonZone") {
-            sh "echo $GIT_COMMITTER_EMAIL"
-            sh "echo $GET_COMMITTER_NAME"
+            sh 'echo $GIT_COMMITTER_EMAIL'
+            sh 'echo $GET_COMMITTER_NAME'
             
             // Download source and dependencies
             stage("Checkout & Validate Project") {
