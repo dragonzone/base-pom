@@ -44,11 +44,6 @@ node("docker") {
                     sh "git push ${pom.artifactId}-${version}"
                 }
             }
-
-            stage("Collect Build Reports") {
-                archiveArtifacts "**/target/*.jar"
-                junit "**/target/surefire-reports/TEST-*.xml"
-            }
         }
     }
 }
