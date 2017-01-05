@@ -21,10 +21,10 @@ node("docker") {
     }
 
     buildEnv.inside {
-        withMaven(localRepo: ".m2/repository", globalMavenSettingsConfig: "maven-dragonZone") {
-            sh 'echo $GIT_COMMITTER_EMAIL'
-            sh 'echo $GIT_COMMITTER_NAME'
-            
+        sh "git config --global user.name Jenkins"
+        sh "git config --gloabl user.email jenkins@jenkins.dragon.zone"
+        
+        withMaven(localRepo: ".m2/repository", globalMavenSettingsConfig: "maven-dragonZone") {            
             // Download source and dependencies
             stage("Checkout & Validate Project") {
                 checkout scm
