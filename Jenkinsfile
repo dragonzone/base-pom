@@ -41,7 +41,7 @@ node("docker") {
             stage("Build Project") {
                 if (isDefaultBranch) {
                     sh "mvn ${mavenArgs} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version} ${mavenDefaultGoals}"
-                    sh "git push ${pom.artifactId}-${version}"
+                    sh "git push --tags"
                 } else {
                     sh "mvn ${mavenArgs} ${mavenNonDefaultGoals}"
                 }
