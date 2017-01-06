@@ -22,7 +22,7 @@ node("docker") {
 
     buildEnv.inside {
         sh "git config --global user.name Jenkins"
-        sh "git config --gloabl user.email jenkins@jenkins.dragon.zone"
+        sh "git config --global user.email jenkins@jenkins.dragon.zone"
         
         withMaven(localRepo: ".m2/repository", globalMavenSettingsConfig: "maven-dragonZone") {            
             // Download source and dependencies
