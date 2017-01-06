@@ -28,6 +28,7 @@ node("docker") {
             // Download source and dependencies
             stage("Checkout & Validate Project") {
                 checkout scm
+                sh "git clean -f && git reset --hard origin/master"
                 sh "mvn ${mavenArgs} ${mavenVaildateProjectGoals}"
             }
 
