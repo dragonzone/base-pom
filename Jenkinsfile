@@ -32,6 +32,7 @@ node("docker") {
         sh "git config user.email ${env.CHANGE_AUTHOR_EMAIL}"
 
         withMaven(localRepo: "${env.WORKSPACE}/.m2/repository", globalMavenSettingsConfig: "maven-dragonZone") {
+            echo "${env.WORKSPACE}/.m2/repository"
             // Download source and dependencies
             stage("Checkout & Initialize Project") {
                 checkout scm
