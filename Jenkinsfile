@@ -9,7 +9,7 @@ def deployableBranchRegex = "master"
 def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
 def mavenNonDeployGoals = "verify"
-def mavenDeployGoals = "scm:tag -DpushChanges=false deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
+def mavenDeployGoals = "deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
 
 // Bail if we shouldn't be building
 if (!env.BRANCH_NAME.matches(buildableBranchRegex)) {
@@ -50,6 +50,7 @@ node("docker") {
             stage("Update Project Version") {
                 echo "Setting version to ${version}"
                 sh "mvn ${mavenArgs} versions:set -DnewVersion=${version} versions:commit"
+                sh "mvn ${mavenArgs} scm:tag -DpushChanges=false -Dtag=\"${name}-${version}\""
             }
 
             // Actually build the project
