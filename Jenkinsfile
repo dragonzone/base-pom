@@ -43,14 +43,16 @@ node("docker") {
             def pom = readMavenPom(file: "pom.xml")
             def name = pom.artifactId
             def version = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
-            currentBuild.displayName = "${name}-${version}"
+            pom.scm.tag = "${name}-${version}"
+            writeMavenPom model: pom
+            currentBuild.displayName = pom.scm.tag
 
             def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
 
             stage("Update Project Version") {
                 echo "Setting version to ${version}"
                 sh "mvn ${mavenArgs} versions:set -DnewVersion=${version} versions:commit"
-                sh "mvn ${mavenArgs} scm:tag -DpushChanges=false -Dtag=\"${name}-${version}\""
+                sh "mvn ${mavenArgs} scm:tag -DpushChanges=false -Dtag=\"${pom.scm.tag}\""
             }
 
             // Actually build the project
