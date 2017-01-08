@@ -64,7 +64,7 @@ node("docker") {
 
                     if (isDeployableBranch) {
                         try {
-                            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '\tgithub-baharclerode-user', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-baharclerode-user', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                                 sh("git config credential.username ${env.GIT_USERNAME}")
                                 sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
                                 sh("GIT_ASKPASS=true git push origin --tags")
