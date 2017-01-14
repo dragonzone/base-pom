@@ -50,7 +50,7 @@ node("docker") {
 
             stage("Validate Project") {
                 echo "Setting version to ${version}-${gitSha1.take(6)}"
-                sh "mvn ${mavenArgs} release:prepare -DpushChanges=false -DpreparationGoals=initialize -Dtag=${pom.artifactId}-${version} -DreleaseVersion=${version}-${gitSha1.take(6)} -DdevelopmentVersion=${pom.version}"
+                sh "mvn ${mavenArgs} release:prepare -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${pom.artifactId}-${version + (isDeployableBranch ? '' : '-' + getSha1.take(6))} -DreleaseVersion=${version}-${gitSha1.take(6)} -DdevelopmentVersion=${pom.version}"
             }
 
             // Actually build the project
