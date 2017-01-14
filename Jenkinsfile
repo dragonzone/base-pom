@@ -28,38 +28,35 @@ node("docker") {
     }
 
     buildEnv.inside {
-        sh "git config user.name ${env.CHANGE_AUTHOR}"
-        sh "git config user.email ${env.CHANGE_AUTHOR_EMAIL}"
 
         withMaven(localRepo: "${env.WORKSPACE}/.m2/repository", globalMavenSettingsConfig: "maven-dragonZone") {
             echo "${env.WORKSPACE}/.m2/repository"
             // Download source and dependencies
             stage("Checkout & Initialize Project") {
                 checkout scm
+                sh "git config user.name ${env.CHANGE_AUTHOR}"
+                sh "git config user.email ${env.CHANGE_AUTHOR_EMAIL}"
                 sh "git clean -f && git reset --hard origin/master"
                 sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
             }
 
             // Set Build Information
+            def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
             def pom = readMavenPom(file: "pom.xml")
             def name = pom.artifactId
             def version = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
-            pom.scm.tag = "${name}-${version}"
-            writeMavenPom model: pom
-            currentBuild.displayName = pom.scm.tag
+            currentBuild.displayName = "${pom.artifactId}-${version}-${gitSha1.take(6)}"
 
-            def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
 
-            stage("Update Project Version") {
-                echo "Setting version to ${version}"
-                sh "mvn ${mavenArgs} versions:set -DnewVersion=${version} versions:commit"
-                sh "mvn ${mavenArgs} scm:tag -DpushChanges=false -Dtag=\"${pom.scm.tag}\""
+            stage("Validate Project") {
+                echo "Setting version to ${version}-${gitSha1.take(6)}"
+                sh "mvn ${mavenArgs} release:prepare -DpushChanges=false -DpreparationGoals=initialize -Dtag=${pom.artifactId}-${version} -DreleaseVersion=${version}-${gitSha1.take(6)} -DdevelopmentVersion=${pom.version}"
             }
 
             // Actually build the project
             stage("Build Project") {
                 try {
-                    sh "mvn ${mavenArgs} ${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}"
+                    sh "release:perform -DlocalCheckout=true -Dgoals=\"${{isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
                     archiveArtifacts "**/target/*.jar"
 
                     if (isDeployableBranch) {
