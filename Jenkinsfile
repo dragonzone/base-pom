@@ -6,7 +6,7 @@ def buildableBranchRegex = ".*" // ( PRs are in the form 'PR-\d+' )
 def deployableBranchRegex = "master"
 
 // Maven Config
-def mavenArgs = "-B -U -Dci=true"
+def mavenArgs = "-B -U -Dci=true -e -X"
 def mavenValidateProjectGoals = "clean initialize"
 def mavenNonDeployGoals = "verify"
 def mavenDeployGoals = "deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
@@ -50,7 +50,7 @@ node("docker") {
 
             stage("Validate Project") {
                 echo "Setting version to ${version}-${gitSha1.take(6)}"
-                sh "mvn ${mavenArgs} release:prepare -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${pom.artifactId}-${version + (isDeployableBranch ? '' : '-' + gitSha1.take(6))} -DreleaseVersion=${version}-${gitSha1.take(6)} -DdevelopmentVersion=${pom.version}"
+                sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${pom.artifactId}-${version + (isDeployableBranch ? '' : '-' + gitSha1.take(6))} -DreleaseVersion=${version}-${gitSha1.take(6)} -DdevelopmentVersion=${pom.version}"
             }
 
             // Actually build the project
