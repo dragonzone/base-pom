@@ -56,7 +56,7 @@ node("docker") {
             // Actually build the project
             stage("Build Project") {
                 try {
-                    sh "mvn release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
+                    sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
                     archiveArtifacts "**/target/*.jar"
 
                     if (isDeployableBranch) {
