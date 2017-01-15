@@ -49,7 +49,7 @@ node("docker") {
                 }
 
                 // Set Build Information
-                def gitUrl = sh(returnStdout: true, script: 'git remote get-url origin').trim()
+                def gitUrl = sh(returnStdout: true, script: 'git remote show origin').trim()
                 def gitInfo = (gitUrl =~ '.*/([^/]+)/([^/]+).git')[0]
                 def gitOrg = gitInfo[1]
                 def gitRepo = gitInfo[2]
