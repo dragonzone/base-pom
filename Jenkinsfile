@@ -49,6 +49,8 @@ node("docker") {
                 }
 
                 // Set Build Information
+                def gitUrl = sh(returnStdout: true, script: 'git remote get-url origin').trim()
+                def (gitOrg, gitRepo) = (gitUrl =~ $.*/([^/]+)/([^/]+).git$)[0]
                 def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
                 def pom = readMavenPom(file: "pom.xml")
                 def artifactId = pom.artifactId
@@ -72,8 +74,7 @@ node("docker") {
                 // Actually build the project
                 stage("Build Project") {
                     try {
-                        sh "git clone . target/checkout -b ${tag}"
-                        sh "cd target/checkout && mvn ${mavenArgs} ${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}"
+                        sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
                         archiveArtifacts "target/checkout/**/target/*.jar"
 
                         if (isDeployableBranch) {
@@ -89,7 +90,7 @@ node("docker") {
                             }
                         }
                     } finally {
-                        junit allowEmptyResults: requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
+                        junit allowEmptyResults: !requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
                     }
                 }
             }
