@@ -1,7 +1,7 @@
 #!Jenkinsfile
 
 def test() {
-    test1 = "blah"
+    echo this
 }
 
 echo "${test1}"
