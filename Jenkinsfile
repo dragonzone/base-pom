@@ -6,7 +6,7 @@ def buildableBranchRegex = ".*" // ( PRs are in the form 'PR-\d+' )
 def deployableBranchRegex = "master"
 
 // Maven Config
-def mavenArgs = "-B -U -Dci=true -e -X"
+def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
 def mavenNonDeployGoals = "verify"
 def mavenDeployGoals = "deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
@@ -38,8 +38,6 @@ node("docker") {
                 stage("Checkout & Initialize Project") {
                     checkout scm
                     // Git Information
-                    def gitAuthor = sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()
-                    def gitAuthorEmail = sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()
                     echo "Git info:        ${gitAuthor} ${gitAuthorEmail}"
                     echo "Git Change Info: ${env.CHANGE_AUTHOR} ${env.CHANGE_EMAIL}"
                     sh "git reset --hard && git clean -f"
@@ -50,18 +48,21 @@ node("docker") {
 
                 // Set Build Information
                 def gitUrl = sh(returnStdout: true, script: 'git remote show origin').trim()
+                def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                def gitAuthor = env.CHANGE_AUTHOR || sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()
+                def gitAuthorEmail = env.CHANGE_AUTHOR_EMAIL || sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()
                 def gitInfo = (gitUrl =~ '.*/([^/]+)/([^/]+).git')[0]
                 def gitOrg = gitInfo[1]
                 def gitRepo = gitInfo[2]
-                echo "Git: ${gitOrg}/${gitRepo}"
-                def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+
                 def pom = readMavenPom(file: "pom.xml")
                 def artifactId = pom.artifactId
                 def versionWithBuild = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
                 def version = "${versionWithBuild}-${gitSha1.take(6)}"
                 def tag = "${artifactId}-${isDeployableBranch ? versionWithBuild : version}"
                 currentBuild.displayName = "${artifactId}-${version}"
-                currentBuild.description = env.CHANGE_AUTHOR
+                currentBuild.description = gitAuthor
+                echo "1 Result: ${currentBuild.result}"
 
 
                 /*
@@ -72,6 +73,7 @@ node("docker") {
                 stage("Validate Project") {
                     echo "Setting version to ${version}"
                     sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
+                    echo "Result: ${currentBuild.result}"
                 }
 
                 // Actually build the project
@@ -88,13 +90,16 @@ node("docker") {
                                     sh("GIT_ASKPASS=true git push origin ${tag}")
                                 }
                             } finally {
+                                echo "2 Result: ${currentBuild.result}"
                                 sh("git config --unset credential.username")
                                 sh("git config --unset credential.helper")
                             }
+                            echo "3 Result: ${currentBuild.result}"
                         }
                     } finally {
                         junit allowEmptyResults: !requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
                     }
+                    echo "4 Result: ${currentBuild.result}"
                 }
             }
         }
