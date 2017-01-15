@@ -59,9 +59,7 @@ node("docker") {
                 def version = "${versionWithBuild}-${gitSha1.take(6)}"
                 def tag = "${artifactId}-${isDeployableBranch ? versionWithBuild : version}"
                 currentBuild.displayName = "${artifactId}-${version}"
-                currentBuild.description = gitAuthor
-                echo "1 Result: ${currentBuild.result}"
-
+                currentBuild.description = "${gitAuthor}"
 
                 /*
                  * Use the maven-release-plugin to verify that the pom is ready for release (no snapshots) and update the
@@ -69,19 +67,15 @@ node("docker") {
                  * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
                  */
                 stage("Validate Project") {
-                    echo "Setting version to ${version}"
                     sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
-                    echo "5 Result: ${currentBuild.result}"
                 }
 
                 // Actually build the project
                 stage("Build Project") {
                     try {
                         sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
-                    echo "7 Result: ${currentBuild.result}"
-                        archiveArtifacts artifacts: 'target/checkout/**/pom.xml'
+                        archiveArtifacts 'target/checkout/**/pom.xml'
 
-                    echo "6 Result: ${currentBuild.result}"
                         if (isDeployableBranch) {
                             try {
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-baharclerode-user', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
@@ -90,16 +84,13 @@ node("docker") {
                                     sh("GIT_ASKPASS=true git push origin ${tag}")
                                 }
                             } finally {
-                                echo "2 Result: ${currentBuild.result}"
                                 sh("git config --unset credential.username")
                                 sh("git config --unset credential.helper")
                             }
-                            echo "3 Result: ${currentBuild.result}"
                         }
                     } finally {
                         junit allowEmptyResults: !requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
                     }
-                    echo "4 Result: ${currentBuild.result}"
                 }
             }
         }
