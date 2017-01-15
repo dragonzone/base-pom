@@ -37,8 +37,13 @@ node("docker") {
                  */
                 stage("Checkout & Initialize Project") {
                     checkout scm
-                    sh "git config --global user.name ${env.CHANGE_AUTHOR}"
-                    sh "git config --global user.email ${env.CHANGE_AUTHOR_EMAIL}"
+                    // Git Information
+                    def gitAuthor = sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()
+                    def gitAuthorEmail = sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()
+                    echo "Git info:        ${gitAuthor} ${gitAuthorEmail}"
+                    echo "Git Change Info: ${env.CHANGE_AUTHOR} ${env.CHANGE_EMAIL}"
+                    sh "git config --global user.name ${gitAuthor}"
+                    sh "git config --global user.email ${gitEmail}"
                     sh "git reset --hard && git clean -f"
                     sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                 }
