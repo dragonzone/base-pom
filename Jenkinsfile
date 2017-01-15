@@ -44,8 +44,8 @@ node("docker") {
                 // Get Git Information
                 def gitUrl = sh(returnStdout: true, script: 'git remote show origin').trim()
                 def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                def gitAuthor = env.CHANGE_AUTHOR || sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()
-                def gitAuthorEmail = env.CHANGE_AUTHOR_EMAIL || sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()
+                def gitAuthor = "${env.CHANGE_AUTHOR ? env.CHANGE_AUTHOR : sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()}"
+                def gitAuthorEmail = "${env.CHANGE_AUTHOR_EMAIL ? env.CHANGE_AUTHOR_EMAIL : sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()}"
                 sh "git config --global user.name ${gitAuthor}"
                 sh "git config --global user.email ${gitAuthorEmail}"
                 def gitInfo = (gitUrl =~ '.*/([^/]+)/([^/]+).git')[0]
@@ -59,7 +59,7 @@ node("docker") {
                 def version = "${versionWithBuild}-${gitSha1.take(6)}"
                 def tag = "${artifactId}-${isDeployableBranch ? versionWithBuild : version}"
                 currentBuild.displayName = "${artifactId}-${version}"
-                currentBuild.description = "${gitAuthor}"
+                currentBuild.description = gitAuthor
 
                 /*
                  * Use the maven-release-plugin to verify that the pom is ready for release (no snapshots) and update the
