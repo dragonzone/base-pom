@@ -41,11 +41,7 @@ node("docker") {
                     sh "git config --global user.email ${env.CHANGE_AUTHOR_EMAIL}"
                     sh "git reset --hard && git clean -f"
                     sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
-                    def test1 = "test1"
-                    test2 = "Test2"
                 }
-
-                echo "${test1} and ${test2}"
 
                 // Set Build Information
                 def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
