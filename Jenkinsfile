@@ -78,6 +78,7 @@ node("docker") {
                 stage("Build Project") {
                     try {
                         sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
+                    echo "7 Result: ${currentBuild.result}"
                         archiveArtifacts "target/checkout/**/target/*.jar"
 
                     echo "6 Result: ${currentBuild.result}"
