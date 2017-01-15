@@ -50,7 +50,10 @@ node("docker") {
 
                 // Set Build Information
                 def gitUrl = sh(returnStdout: true, script: 'git remote get-url origin').trim()
-                def (gitOrg, gitRepo) = (gitUrl =~ '.*/([^/]+)/([^/]+).git')[0]
+                def gitInfo = (gitUrl =~ '.*/([^/]+)/([^/]+).git')[0]
+                def gitOrg = gitInfo[1]
+                def gitRepo = gitInfo[2]
+                echo "Git: ${gitOrg}/${gitRepo}"
                 def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
                 def pom = readMavenPom(file: "pom.xml")
                 def artifactId = pom.artifactId
