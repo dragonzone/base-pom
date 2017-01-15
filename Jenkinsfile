@@ -50,7 +50,7 @@ node("docker") {
             def versionWithBuild = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
             def version = "${versionWithBuild}-${gitSha1.take(6)}"
             def tag = "${artifactId}-${isDeployableBranch ? versionWithBuild : version}"
-            currentBuild.displayName = "${artifactId}-${versionWithSha1}"
+            currentBuild.displayName = "${artifactId}-${version}"
             currentBuild.description = env.CHANGE_AUTHOR
 
 
