@@ -37,24 +37,22 @@ node("docker") {
                  */
                 stage("Checkout & Initialize Project") {
                     checkout scm
-                    // Git Information
-                    echo "Git info:        ${gitAuthor} ${gitAuthorEmail}"
-                    echo "Git Change Info: ${env.CHANGE_AUTHOR} ${env.CHANGE_EMAIL}"
                     sh "git reset --hard && git clean -f"
-                    sh "git config --global user.name ${gitAuthor}"
-                    sh "git config --global user.email ${gitAuthorEmail}"
                     sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                 }
 
-                // Set Build Information
+                // Get Git Information
                 def gitUrl = sh(returnStdout: true, script: 'git remote show origin').trim()
                 def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
                 def gitAuthor = env.CHANGE_AUTHOR || sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()
                 def gitAuthorEmail = env.CHANGE_AUTHOR_EMAIL || sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()
+                sh "git config --global user.name ${gitAuthor}"
+                sh "git config --global user.email ${gitAuthorEmail}"
                 def gitInfo = (gitUrl =~ '.*/([^/]+)/([^/]+).git')[0]
                 def gitOrg = gitInfo[1]
                 def gitRepo = gitInfo[2]
 
+                // Set Build Information
                 def pom = readMavenPom(file: "pom.xml")
                 def artifactId = pom.artifactId
                 def versionWithBuild = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
