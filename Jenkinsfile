@@ -1,5 +1,7 @@
 #!Jenkinsfile
 
+echo this
+
 // Project Config
 def buildEnvironmentImage = "maven:3.3.9-jdk-8"
 def buildableBranchRegex = ".*" // ( PRs are in the form 'PR-\d+' )
