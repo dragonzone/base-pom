@@ -42,9 +42,9 @@ node("docker") {
                     def gitAuthorEmail = sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()
                     echo "Git info:        ${gitAuthor} ${gitAuthorEmail}"
                     echo "Git Change Info: ${env.CHANGE_AUTHOR} ${env.CHANGE_EMAIL}"
+                    sh "git reset --hard && git clean -f"
                     sh "git config --global user.name ${gitAuthor}"
                     sh "git config --global user.email ${gitAuthorEmail}"
-                    sh "git reset --hard && git clean -f"
                     sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                 }
 
