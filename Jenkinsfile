@@ -71,7 +71,7 @@ node("docker") {
                 stage("Validate Project") {
                     echo "Setting version to ${version}"
                     sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
-                    echo "Result: ${currentBuild.result}"
+                    echo "5 Result: ${currentBuild.result}"
                 }
 
                 // Actually build the project
@@ -80,6 +80,7 @@ node("docker") {
                         sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
                         archiveArtifacts "target/checkout/**/target/*.jar"
 
+                    echo "6 Result: ${currentBuild.result}"
                         if (isDeployableBranch) {
                             try {
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-baharclerode-user', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
