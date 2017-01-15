@@ -1,6 +1,10 @@
 #!Jenkinsfile
 
-echo this
+def test() {
+    test1 = "blah"
+}
+
+echo "${test1}"
 
 // Project Config
 def buildEnvironmentImage = "maven:3.3.9-jdk-8"
