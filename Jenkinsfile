@@ -79,7 +79,7 @@ node("docker") {
                     try {
                         sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
                     echo "7 Result: ${currentBuild.result}"
-                        archiveArtifacts "target/checkout/**/target/*.jar"
+                        archiveArtifacts "target/checkout/**/target/*.pom"
 
                     echo "6 Result: ${currentBuild.result}"
                         if (isDeployableBranch) {
