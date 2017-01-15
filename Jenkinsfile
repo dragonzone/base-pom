@@ -30,18 +30,22 @@ node("docker") {
     }
 
     buildEnv.inside {
-
-        withMaven(localRepo: "${env.WORKSPACE}/.m2/repository", globalMavenSettingsConfig: globalMavenSettingsConfig) {
+        withEnv(["HOME=${env.WORKSPACE}"])
+        withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig) {
             /*
              * Clone the repository and make sure that the pom.xml file is structurally valid and has a GAV
              */
             stage("Checkout & Initialize Project") {
                 checkout scm
-                sh "git config user.name ${env.CHANGE_AUTHOR}"
-                sh "git config user.email ${env.CHANGE_AUTHOR_EMAIL}"
+                sh "git config --global user.name ${env.CHANGE_AUTHOR}"
+                sh "git config --global user.email ${env.CHANGE_AUTHOR_EMAIL}"
                 sh "git reset --hard && git clean -f"
                 sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
+                def test1 = "test1"
+                test2 = "Test2"
             }
+
+            echo "${test1} and ${test2}"
 
             // Set Build Information
             def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
