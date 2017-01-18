@@ -6,7 +6,7 @@ def buildableBranchRegex = ".*" // ( PRs are in the form 'PR-\d+' )
 def deployableBranchRegex = "master"
 
 // Maven Config
-def mavenArgs = "-X -B -U -Dci=true"
+def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
 def mavenNonDeployGoals = "verify gpg:sign"
 def mavenDeployGoals = "gpg:sign deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
