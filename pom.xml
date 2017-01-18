@@ -11,6 +11,7 @@
 
     <name>DragonZone Parent POM</name>
     <description>POM file for managing DragonZone projects</description>
+    <url>https://code.dragon.zone/dragonzone/base-pom</url>
 
     <!-- DragonZone -->
     <organization>
@@ -42,7 +43,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <deployAtEnd>true</deployAtEnd>
-        <installAtEnd>true</installAtEnd>
         <!-- Core Plugin Versions -->
         <clean.plugin.version>3.0.0</clean.plugin.version>
         <compiler.plugin.version>3.5.1</compiler.plugin.version>
