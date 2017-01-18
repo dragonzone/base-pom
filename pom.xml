@@ -13,6 +13,13 @@
     <description>POM file for managing DragonZone projects</description>
     <url>https://code.dragon.zone/dragonzone/base-pom</url>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://code.dragon.zone/dragonzone/base-pom/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
     <!-- DragonZone -->
     <organization>
         <name>DragonZone</name>
