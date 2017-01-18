@@ -100,6 +100,7 @@ node("docker") {
                             sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:deploy-staged"
                         } catch (err) {
                             sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:drop"
+                            throw err
                         }
                     }
                 }
