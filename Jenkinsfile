@@ -94,6 +94,11 @@ node("docker") {
                         junit allowEmptyResults: !requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
                     }
                 }
+                if (isDeployableBranch) {
+                    stage("Stage to Maven Central") {
+                        sh "mvn ${mavenArgs} nexus-staging:deploy-staged"
+                    }
+                }
             }
         }
     }

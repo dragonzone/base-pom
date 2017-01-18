@@ -98,6 +98,7 @@
         <toolchains.plugin.version>1.1</toolchains.plugin.version>
         <build-helper.plugin.version>1.12</build-helper.plugin.version>
         <versions.plugin.version>2.3</versions.plugin.version>
+        <nexus-staging-maven.plugin.version>1.6.7</nexus-staging-maven.plugin.version>
     </properties>
 
     <!-- Distribute to the public repositories in the DragonZone artifactory instance -->
@@ -422,7 +423,35 @@
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${versions.plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>local-nexus-stage</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                            <configuration>
+                                <skipRemoteStaging>true</skipRemoteStaging>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <serverId>sonatype-nexus</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>
