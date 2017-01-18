@@ -96,7 +96,11 @@ node("docker") {
                 }
                 if (isDeployableBranch) {
                     stage("Stage to Maven Central") {
-                        sh "mvn ${mavenArgs} nexus-staging:deploy-staged"
+                        try {
+                            sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:deploy-staged"
+                        } catch (err) {
+                            sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:drop"
+                        }
                     }
                 }
             }
