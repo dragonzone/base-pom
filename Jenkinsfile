@@ -74,7 +74,7 @@ node("docker") {
                 stage("Build Project") {
                     try {
                         withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
-                            sh "mvn ${mavenArgs} release:perform -Dgpg.keyname=\"$GPG_KEYNAME\" -Dgpg.publicKeyring=\"$GPG_PUBRING\" -Dgpg.secretKeyring=\"$GPG_SECRING\" -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
+                            sh "mvn ${mavenArgs} release:perform -Dgpg.defaultKeyring=false -Dgpg.keyname=\"$GPG_KEYNAME\" -Dgpg.publicKeyring=\"$GPG_PUBRING\" -Dgpg.secretKeyring=\"$GPG_SECRING\" -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs}\""
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
