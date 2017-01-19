@@ -98,6 +98,10 @@ node("docker") {
                     stage("Stage to Maven Central") {
                         try {
                             sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:deploy-staged"
+
+                            input message: 'Publish to Central?', ok: 'Publish'
+
+                            sh "cd target/checkout && mvn ${mavenArgs} mexus-staging:release"
                         } catch (err) {
                             sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:drop"
                             throw err

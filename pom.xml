@@ -108,25 +108,25 @@
         <nexus-staging-maven.plugin.version>1.6.7</nexus-staging-maven.plugin.version>
     </properties>
 
-    <!-- Distribute to the public repositories in the DragonZone artifactory instance -->
+    <!-- Distribute to the public repositories in the DragonZone Nexus -->
     <distributionManagement>
         <repository>
             <id>dragonZone</id>
-            <name>DragonZone Artifactory Instance</name>
-            <url>https://maven.dragon.zone/releases</url>
+            <name>DragonZone Nexus</name>
+            <url>https://maven.dragon.zone/repository/maven-releases</url>
         </repository>
         <snapshotRepository>
             <id>dragonZone-snapshots</id>
-            <name>DragonZone Artifactory Instance (Snapshots)</name>
-            <url>https://maven.dragon.zone/snapshots</url>
+            <name>DragonZone Nexus (Snapshots)</name>
+            <url>https://maven.dragon.zone/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git@code.dragon.zone:dragonzone/dragonzone-parent.git</connection>
-        <developerConnection>scm:git:git@code.dragon.zone:dragonzone/dragonzone-parent.git</developerConnection>
+        <connection>scm:git:git@code.dragon.zone:dragonzone/base-pom.git</connection>
+        <developerConnection>scm:git:git@code.dragon.zone:dragonzone/base-pom.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://code.dragon.zone/dragonzone/dragonzone-parent</url>
+        <url>https://code.dragon.zone/dragonzone/base-pom</url>
     </scm>
 
     <build>
