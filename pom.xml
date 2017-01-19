@@ -229,6 +229,10 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
+                            <phase>none</phase>
+                        </execution>
+                        <execution>
+                            <id>attach-sources-override</id>
                             <goals>
                                 <goal>jar-no-fork</goal>
                             </goals>
