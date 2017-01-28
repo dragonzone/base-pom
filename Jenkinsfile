@@ -8,8 +8,10 @@ def deployableBranchRegex = "master"
 // Maven Config
 def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
-def mavenNonDeployGoals = "verify -P sign"
-def mavenDeployGoals = "-P sign,maven-central deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
+def mavenNonDeployArgs = "-P sign"
+def mavenNonDeployGoals = "verify"
+def mavenDeployArgs = "-P sign,maven-central -DdeployAtEnd=true"
+def mavenDeployGoals = "deploy"
 def requireTests = false
 def globalMavenSettingsConfig = "maven-dragonZone"
 
@@ -74,7 +76,7 @@ node("docker") {
                 stage("Build Project") {
                     try {
                         withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
-                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
+                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
