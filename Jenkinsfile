@@ -8,8 +8,8 @@ def deployableBranchRegex = "master"
 // Maven Config
 def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
-def mavenNonDeployGoals = "verify gpg:sign"
-def mavenDeployGoals = "gpg:sign deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
+def mavenNonDeployGoals = "verify -P sign"
+def mavenDeployGoals = "-P sign,maven-central deploy -DdeployAtEnd=true -DupdateReleaseInfo=true"
 def requireTests = false
 def globalMavenSettingsConfig = "maven-dragonZone"
 

@@ -104,6 +104,7 @@
         <stage.plugin.version>1.0</stage.plugin.version>
         <toolchains.plugin.version>1.1</toolchains.plugin.version>
         <build-helper.plugin.version>1.12</build-helper.plugin.version>
+        <buildnumber.plugin.version>1.4</buildnumber.plugin.version>
         <versions.plugin.version>2.3</versions.plugin.version>
         <nexus-staging-maven.plugin.version>1.6.7</nexus-staging-maven.plugin.version>
     </properties>
@@ -201,6 +202,14 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -431,6 +440,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${buildnumber.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${versions.plugin.version}</version>
                 </plugin>
@@ -438,31 +452,106 @@
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${nexus-staging-maven.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>local-nexus-stage</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                            <configuration>
-                                <skipRemoteStaging>true</skipRemoteStaging>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <serverId>sonatype-nexus</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>git-project</id>
+            <activation>
+                <file>
+                    <exists>.git/HEAD</exists>
+                </file>
+            </activation>
+            <properties>
+                <maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
+                <maven.buildNumber.doUpdate>false</maven.buildNumber.doUpdate>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <configuration>
+                                <archive>
+                                    <manifestEntries>
+                                        <Implementation-Build>${buildNumber}</Implementation-Build>
+                                        <Implementation-Branch>${scmBranch}</Implementation-Branch>
+                                    </manifestEntries>
+                                </archive>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>buildnumber-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>git-hash</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>create</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <revisionOnScmFailure>DEV</revisionOnScmFailure>
+                            <shortRevisionLength>8</shortRevisionLength>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>maven-central</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.sonatype.plugins</groupId>
+                            <artifactId>nexus-staging-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>local-nexus-stage</id>
+                                    <phase>deploy</phase>
+                                    <goals>
+                                        <goal>deploy</goal>
+                                    </goals>
+                                    <configuration>
+                                        <skipRemoteStaging>true</skipRemoteStaging>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <serverId>sonatype-nexus</serverId>
+                                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>sign</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
