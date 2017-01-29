@@ -10,8 +10,8 @@ def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
 def mavenNonDeployArgs = "-P sign"
 def mavenNonDeployGoals = "verify"
-def mavenDeployArgs = "-P sign -DdeployAtEnd=true"
-def mavenDeployGoals = "deploy"
+def mavenDeployArgs = "-P sign,maven-central -DdeployAtEnd=true"
+def mavenDeployGoals = "deploy nexus-staging:deploy"
 def requireTests = false
 def globalMavenSettingsConfig = "maven-dragonZone"
 

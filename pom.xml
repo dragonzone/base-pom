@@ -452,27 +452,12 @@
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${nexus-staging-maven.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>local-nexus-stage</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                            <configuration>
-                                <skipRemoteStaging>true</skipRemoteStaging>
-                            </configuration>
-                        </execution>
-                    </executions>
+                    <configuration>
+                        <skipRemoteStaging>true</skipRemoteStaging>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
     <profiles>
