@@ -10,7 +10,7 @@ def mavenArgs = "-B -U -Dci=true"
 def mavenValidateProjectGoals = "clean initialize"
 def mavenNonDeployArgs = "-P sign"
 def mavenNonDeployGoals = "verify"
-def mavenDeployArgs = "-P sign,maven-central -DdeployAtEnd=true"
+def mavenDeployArgs = "-P sign -DdeployAtEnd=true"
 def mavenDeployGoals = "deploy"
 def requireTests = false
 def globalMavenSettingsConfig = "maven-dragonZone"
@@ -99,13 +99,13 @@ node("docker") {
                 if (isDeployableBranch) {
                     stage("Stage to Maven Central") {
                         try {
-                            sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:deploy-staged"
+                            sh "cd target/checkout && mvn ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
 
                             input message: 'Publish to Central?', ok: 'Publish'
 
-                            sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:release"
+                            sh "cd target/checkout && mvn ${mavenArgs} -P maven-central nexus-staging:release"
                         } catch (err) {
-                            sh "cd target/checkout && mvn ${mavenArgs} nexus-staging:drop"
+                            sh "cd target/checkout && mvn ${mavenArgs} -P maven-central nexus-staging:drop"
                             throw err
                         }
                     }
