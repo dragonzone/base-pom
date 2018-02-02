@@ -40,6 +40,7 @@
         <jackson2.version>2.8.6</jackson2.version>
         <javax-inject.version>1</javax-inject.version>
         <junit4.version>4.12</junit4.version>
+        <junit5.version>5.0.3</junit5.version>
         <logback.version>1.1.9</logback.version>
         <lombok.version>1.16.12</lombok.version>
         <mockito.version>2.7.1</mockito.version>
@@ -49,6 +50,8 @@
         <slf4j.version>1.7.22</slf4j.version>
         <!-- Plugin Versions -->
         <lombok.plugin.version>${lombok.version}.0</lombok.plugin.version>
+        <surefire.plugin.jupiterProvider.version>1.0.3</surefire.plugin.jupiterProvider.version>
+        <surefilre.plugin.jupiterVintage.version>4.12.3</surefilre.plugin.jupiterVintage.version>
     </properties>
 
     <dependencyManagement>
@@ -95,6 +98,11 @@
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest-all</artifactId>
                 <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit5.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
@@ -294,6 +302,26 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-surefire-provider</artifactId>
+                            <version>${surefire.plugin.jupiterProvider.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>${junit5.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.junit.vintage</groupId>
+                            <artifactId>junit-vintage-engine</artifactId>
+                            <version>${surefilre.plugin.jupiterVintage.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
