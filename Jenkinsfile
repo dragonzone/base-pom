@@ -1,7 +1,7 @@
 #!Jenkinsfile
 
 // Project Config
-def buildEnvironmentImage = "maven:3.3.9-jdk-8"
+def buildEnvironmentImage = "maven:3.5.2-jdk-8"
 def buildableBranchRegex = ".*" // ( PRs are in the form 'PR-\d+' )
 def deployableBranchRegex = "master"
 
@@ -40,7 +40,7 @@ node("docker") {
                 stage("Checkout & Initialize Project") {
                     checkout scm
                     sh "git reset --hard && git clean -f"
-                    sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
+                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                 }
 
                 // Get Git Information
@@ -69,14 +69,14 @@ node("docker") {
                  * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
                  */
                 stage("Validate Project") {
-                    sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
+                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
                 }
 
                 // Actually build the project
                 stage("Build Project") {
                     try {
                         withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
-                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
+                            sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
@@ -99,13 +99,13 @@ node("docker") {
                 if (isDeployableBranch) {
                     stage("Stage to Maven Central") {
                         try {
-                            sh "cd target/checkout && mvn ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
+                            sh "cd target/checkout && PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
 
                             input message: 'Publish to Central?', ok: 'Publish'
 
-                            sh "cd target/checkout && mvn ${mavenArgs} -P maven-central nexus-staging:release"
+                            sh "cd target/checkout && PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} -P maven-central nexus-staging:release"
                         } catch (err) {
-                            sh "cd target/checkout && mvn ${mavenArgs} -P maven-central nexus-staging:drop"
+                            sh "cd target/checkout && PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} -P maven-central nexus-staging:drop"
                             throw err
                         }
                     }
