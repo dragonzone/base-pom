@@ -71,10 +71,11 @@ node("docker") {
                 // Actually build the project
                 stage("Build Project") {
                     try {
-                        sh "mkdir /run/user"
-                        sh "gpgconf --create-socketdir"
-                        withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
+                        sh "mkdir /tmp/gnupg"
+                        withEnv(["GNUPGHOME=/tmp/gnupg"]) {
+                            withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
+                                sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
+                            }
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
