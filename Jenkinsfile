@@ -32,7 +32,7 @@ node("docker") {
     }
 
     buildEnv.inside {
-        withEnvironment(["HOME=/tmp/home/"]) {
+        withEnv(["HOME=/tmp/home/"]) {
 
             sh "mkdir -p $HOME"
 
