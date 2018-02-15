@@ -32,17 +32,16 @@ node("docker") {
     }
 
     buildEnv.inside('-v /etc/passwd:/etc/passwd:ro') {
-        withEnv(["HOME=/tmp/home"]) {
+        sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
 
-            sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
-
-            withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig, mavenLocalRepo: '.m2') {
+        withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig, mavenLocalRepo: '.m2') {
+            withEnv(["PATH=$MVN_CMD_DIR:$PATH"]) {
                 /*
                  * Clone the repository and make sure that the pom.xml file is structurally valid and has a GAV
                  */
                 stage("Checkout & Initialize Project") {
                     checkout scm
-                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} ${mavenValidateProjectGoals}"
+                    sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                 }
 
                 // Get Git Information
@@ -67,17 +66,16 @@ node("docker") {
                  * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
                  */
                 stage("Validate Project") {
-                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
+                    sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
                 }
 
                 // Actually build the project
                 stage("Build Project") {
                     try {
                         withCredentials([string(credentialsId: 'gpg-signing-key-id', variable: 'GPG_KEYID'), file(credentialsId: 'gpg-signing-key', variable: 'GPG_SIGNING_KEY')]) {
-
                             sh 'gpg --allow-secret-key-import --import $GPG_SIGNING_KEY && echo "$GPG_KEYID:6:" | gpg --import-ownertrust'
 
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID\""
+                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID\""
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
@@ -93,13 +91,13 @@ node("docker") {
                 if (isDeployableBranch) {
                     stage("Stage to Maven Central") {
                         try {
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
+                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
 
                             input message: 'Publish to Central?', ok: 'Publish'
 
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
+                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
                         } catch (err) {
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
+                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
                             throw err
                         }
                     }

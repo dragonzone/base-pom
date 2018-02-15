@@ -11,12 +11,12 @@
 
     <name>DragonZone Parent POM</name>
     <description>POM file for managing DragonZone projects</description>
-    <url>https://code.dragon.zone/dragonzone/base-pom</url>
+    <url>https://github.com/dragonzone/base-pom</url>
 
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://code.dragon.zone/dragonzone/base-pom/blob/master/LICENSE</url>
+            <url>https://github.com/dragonzone/base-pom/blob/master/LICENSE</url>
         </license>
     </licenses>
 
@@ -29,9 +29,9 @@
     <!-- Developer Info -->
     <developers>
         <developer>
-            <id>dandroid</id>
+            <id>baharclerode</id>
             <name>Bryan Harclerode</name>
-            <email>darthandroid@gmail.com</email>
+            <email>baharclerode@devdragon.net</email>
             <timezone>-6</timezone>
             <roles>
                 <role>developer</role>
