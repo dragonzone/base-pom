@@ -42,7 +42,7 @@ node("docker") {
                      */
                     stage("Checkout & Initialize Project") {
                         checkout scm
-                        sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
+                        sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                     }
 
                     // Get Git Information
