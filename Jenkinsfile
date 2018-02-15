@@ -67,14 +67,19 @@ node("docker") {
                  * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
                  */
                 stage("Validate Project") {
-                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
+                    sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
                 }
 
                 // Actually build the project
                 stage("Build Project") {
                     try {
                         withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
+
+                            sh "gpg --keyring $GPG_PUBRING --secret-keyring $GPG_SECRING --default-key $GPG_KEYNAME --list-keys"
+
+                            sh "gpg --keyring $GPG_PUBRING --secret-keyring $GPG_SECRING --default-key $GPG_KEYNAME --list-secret-keys"
+
+                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
@@ -90,13 +95,13 @@ node("docker") {
                 if (isDeployableBranch) {
                     stage("Stage to Maven Central") {
                         try {
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
+                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
 
                             input message: 'Publish to Central?', ok: 'Publish'
 
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
+                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
                         } catch (err) {
-                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
+                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
                             throw err
                         }
                     }
