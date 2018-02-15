@@ -42,7 +42,7 @@ node("docker") {
                  */
                 stage("Checkout & Initialize Project") {
                     checkout scm
-                    sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
+                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                 }
 
                 // Get Git Information
@@ -67,7 +67,7 @@ node("docker") {
                  * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
                  */
                 stage("Validate Project") {
-                    sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
+                    sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
                 }
 
                 // Actually build the project
@@ -77,7 +77,7 @@ node("docker") {
 
                             sh 'gpg --allow-secret-key-import --import $GPG_SIGNING_KEY && echo "$GPG_KEYID:6:" | gpg --import-ownertrust'
 
-                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID\""
+                            sh "PATH=$MVN_CMD_DIR:$PATH mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID\""
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
@@ -93,13 +93,13 @@ node("docker") {
                 if (isDeployableBranch) {
                     stage("Stage to Maven Central") {
                         try {
-                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
+                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
 
                             input message: 'Publish to Central?', ok: 'Publish'
 
-                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
+                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
                         } catch (err) {
-                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
+                            sh "PATH=$MVN_CMD_DIR:$PATH mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
                             throw err
                         }
                     }
