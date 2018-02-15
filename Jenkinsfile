@@ -73,13 +73,11 @@ node("docker") {
                 // Actually build the project
                 stage("Build Project") {
                     try {
-                        withCredentials([string(credentialsId: 'gpg-keyname', variable: 'GPG_KEYNAME'), file(credentialsId: 'gpg-secring', variable: 'GPG_SECRING'), file(credentialsId: 'gpg-pubring', variable: 'GPG_PUBRING')]) {
+                        withCredentials([string(credentialsId: 'gpg-signing-key-id', variable: 'GPG_KEYID'), file(credentialsId: 'gpg-signing-key', variable: 'GPG_SIGNING_KEY')]) {
 
-                            sh "gpg --keyring $GPG_PUBRING --secret-keyring $GPG_SECRING --default-key $GPG_KEYNAME --list-keys"
+                            sh 'gpg --allow-secret-key-import --import $GPG_SIGNING_KEY && echo "$GPG_KEYID:6:" | gpg --import-ownertrust'
 
-                            sh "gpg --keyring $GPG_PUBRING --secret-keyring $GPG_SECRING --default-key $GPG_KEYNAME --list-secret-keys"
-
-                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.defaultKeyring=false -Dgpg.keyname=$GPG_KEYNAME -Dgpg.publicKeyring=$GPG_PUBRING -Dgpg.secretKeyring=$GPG_SECRING\""
+                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID"
                         }
                         archiveArtifacts 'target/checkout/**/pom.xml'
 
