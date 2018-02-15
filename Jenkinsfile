@@ -32,10 +32,10 @@ node("docker") {
     }
 
     buildEnv.inside('-v /etc/passwd:/etc/passwd:ro') {
-        sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
-
         withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig, mavenLocalRepo: '.m2') {
-            withEnv(["PATH=$MVN_CMD_DIR:$PATH"]) {
+            withEnv(["HOME=/tmp/home","PATH=$MVN_CMD_DIR:$PATH"]) {
+                sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
+
                 /*
                  * Clone the repository and make sure that the pom.xml file is structurally valid and has a GAV
                  */
