@@ -31,7 +31,7 @@ node("docker") {
         buildEnv.pull()
     }
 
-    buildEnv.inside {
+    buildEnv.inside('-v /etc/passwd:/etc/passwd:ro') {
         withEnv(["HOME=/tmp/home"]) {
 
             sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
