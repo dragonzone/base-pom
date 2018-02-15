@@ -32,73 +32,75 @@ node("docker") {
     }
 
     buildEnv.inside('-v /etc/passwd:/etc/passwd:ro') {
-        withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig, mavenLocalRepo: '.m2') {
-            withEnv(["HOME=/tmp/home","PATH=$MVN_CMD_DIR:$PATH"]) {
-                sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
+        withEnv(["HOME=/tmp/home"]) {
+            sh "mkdir -p $HOME/.gnupg && chmod 700 $HOME/.gnupg"
+            withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig, mavenLocalRepo: '.m2') {
+                withEnv(["PATH=$MVN_CMD_DIR:$PATH"]) {
 
-                /*
-                 * Clone the repository and make sure that the pom.xml file is structurally valid and has a GAV
-                 */
-                stage("Checkout & Initialize Project") {
-                    checkout scm
-                    sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
-                }
-
-                // Get Git Information
-                def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                def gitAuthor = "${env.CHANGE_AUTHOR ? env.CHANGE_AUTHOR : sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()}"
-                def gitAuthorEmail = "${env.CHANGE_AUTHOR_EMAIL ? env.CHANGE_AUTHOR_EMAIL : sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()}"
-                sh "git config user.name ${gitAuthor}"
-                sh "git config user.email ${gitAuthorEmail}"
-
-                // Set Build Information
-                def pom = readMavenPom(file: "pom.xml")
-                def artifactId = pom.artifactId
-                def versionWithBuild = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
-                def version = "${versionWithBuild}-${gitSha1.take(6)}"
-                def tag = "${artifactId}-${isDeployableBranch ? versionWithBuild : version}"
-                currentBuild.displayName = "${artifactId}-${version}"
-                currentBuild.description = gitAuthor
-
-                /*
-                 * Use the maven-release-plugin to verify that the pom is ready for release (no snapshots) and update the
-                 * version. We don't push changes here, because we will push the tag after the build if it succeeds. We
-                 * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
-                 */
-                stage("Validate Project") {
-                    sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
-                }
-
-                // Actually build the project
-                stage("Build Project") {
-                    try {
-                        withCredentials([string(credentialsId: 'gpg-signing-key-id', variable: 'GPG_KEYID'), file(credentialsId: 'gpg-signing-key', variable: 'GPG_SIGNING_KEY')]) {
-                            sh 'gpg --allow-secret-key-import --import $GPG_SIGNING_KEY && echo "$GPG_KEYID:6:" | gpg --import-ownertrust'
-
-                            sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID\""
-                        }
-                        archiveArtifacts 'target/checkout/**/pom.xml'
-
-                        if (isDeployableBranch) {
-                            sshagent([scm.userRemoteConfigs[0].credentialsId]) {
-                                sh "git push origin ${tag}"
-                            }
-                        }
-                    } finally {
-                        junit allowEmptyResults: !requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
+                    /*
+                     * Clone the repository and make sure that the pom.xml file is structurally valid and has a GAV
+                     */
+                    stage("Checkout & Initialize Project") {
+                        checkout scm
+                        sh "mvn ${mavenArgs} ${mavenValidateProjectGoals}"
                     }
-                }
-                if (isDeployableBranch) {
-                    stage("Stage to Maven Central") {
+
+                    // Get Git Information
+                    def gitSha1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    def gitAuthor = "${env.CHANGE_AUTHOR ? env.CHANGE_AUTHOR : sh(returnStdout: true, script: 'git log -1 --format="%aN" HEAD').trim()}"
+                    def gitAuthorEmail = "${env.CHANGE_AUTHOR_EMAIL ? env.CHANGE_AUTHOR_EMAIL : sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()}"
+                    sh "git config user.name ${gitAuthor}"
+                    sh "git config user.email ${gitAuthorEmail}"
+
+                    // Set Build Information
+                    def pom = readMavenPom(file: "pom.xml")
+                    def artifactId = pom.artifactId
+                    def versionWithBuild = pom.version.replace("-SNAPSHOT", ".${env.BUILD_NUMBER}")
+                    def version = "${versionWithBuild}-${gitSha1.take(6)}"
+                    def tag = "${artifactId}-${isDeployableBranch ? versionWithBuild : version}"
+                    currentBuild.displayName = "${artifactId}-${version}"
+                    currentBuild.description = gitAuthor
+
+                    /*
+                     * Use the maven-release-plugin to verify that the pom is ready for release (no snapshots) and update the
+                     * version. We don't push changes here, because we will push the tag after the build if it succeeds. We
+                     * also set the preparationGoals to initialize so that we don't do a build here, just pom updates.
+                     */
+                    stage("Validate Project") {
+                        sh "mvn ${mavenArgs} release:prepare -Dresume=false -Darguments=\"${mavenArgs}\" -DpushChanges=false -DpreparationGoals=initialize -Dtag=${tag} -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version}"
+                    }
+
+                    // Actually build the project
+                    stage("Build Project") {
                         try {
-                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
+                            withCredentials([string(credentialsId: 'gpg-signing-key-id', variable: 'GPG_KEYID'), file(credentialsId: 'gpg-signing-key', variable: 'GPG_SIGNING_KEY')]) {
+                                sh 'gpg --allow-secret-key-import --import $GPG_SIGNING_KEY && echo "$GPG_KEYID:6:" | gpg --import-ownertrust'
 
-                            input message: 'Publish to Central?', ok: 'Publish'
+                                sh "mvn ${mavenArgs} release:perform -DlocalCheckout=true -Dgoals=\"${isDeployableBranch ? mavenDeployGoals : mavenNonDeployGoals}\" -Darguments=\"${mavenArgs} ${isDeployableBranch ? mavenDeployArgs : mavenNonDeployArgs} -Dgpg.keyname=$GPG_KEYID\""
+                            }
+                            archiveArtifacts 'target/checkout/**/pom.xml'
 
-                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
-                        } catch (err) {
-                            sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
-                            throw err
+                            if (isDeployableBranch) {
+                                sshagent([scm.userRemoteConfigs[0].credentialsId]) {
+                                    sh "git push origin ${tag}"
+                                }
+                            }
+                        } finally {
+                            junit allowEmptyResults: !requireTests, testResults: "target/checkout/**/target/surefire-reports/TEST-*.xml"
+                        }
+                    }
+                    if (isDeployableBranch) {
+                        stage("Stage to Maven Central") {
+                            try {
+                                sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:deploy-staged"
+
+                                input message: 'Publish to Central?', ok: 'Publish'
+
+                                sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:release"
+                            } catch (err) {
+                                sh "mvn -f target/checkout/pom.xml ${mavenArgs} -P maven-central nexus-staging:drop"
+                                throw err
+                            }
                         }
                     }
                 }
