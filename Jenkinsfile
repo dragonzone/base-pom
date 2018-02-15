@@ -34,7 +34,7 @@ node("docker") {
     buildEnv.inside {
         withEnv(["HOME=/tmp/home"]) {
 
-            sh "mkdir -p $HOME"
+            sh "mkdir -p $HOME/.gnupg"
 
             withMaven(globalMavenSettingsConfig: globalMavenSettingsConfig, mavenLocalRepo: '.m2') {
                 /*
