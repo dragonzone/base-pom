@@ -50,6 +50,7 @@ node("docker") {
                 def gitAuthorEmail = "${env.CHANGE_AUTHOR_EMAIL ? env.CHANGE_AUTHOR_EMAIL : sh(returnStdout: true, script: 'git log -1 --format="%aE" HEAD').trim()}"
                 sh "git config user.name ${gitAuthor}"
                 sh "git config user.email ${gitAuthorEmail}"
+                sh "git config core.sshCommand 'ssh -o UserKnownHostsFile=$WORKSPACE/.git/known_hosts'"
 
                 // Set Build Information
                 def pom = readMavenPom(file: "pom.xml")
