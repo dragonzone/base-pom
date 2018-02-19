@@ -6,7 +6,7 @@
     <parent>
         <groupId>zone.dragon</groupId>
         <artifactId>base-pom</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1.1-d0bd61</version>
     </parent>
 
     <artifactId>base-kotlin-pom</artifactId>
