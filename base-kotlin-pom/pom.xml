@@ -6,13 +6,13 @@
     <parent>
         <groupId>zone.dragon</groupId>
         <artifactId>base-pom</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-kotlin-pom</artifactId>
     <packaging>pom</packaging>
 
-    <name>DragonZone Parent POM for Kotlin</name>
+    <name>DragonZone :: Base POM for Kotlin</name>
     <description>POM file for managing DragonZone kotlin projects</description>
 
     <!-- Global Properties -->
