@@ -389,6 +389,9 @@
                                     <banDuplicatePomDependencyVersions/>
                                     <reactorModuleConvergence/>
                                     <dependencyConvergence/>
+                                    <requireMavenVersion>
+                                        <version>3.5.0</version>
+                                    </requireMavenVersion>
                                 </rules>
                             </configuration>
                         </execution>
