@@ -8,7 +8,7 @@
     <fileSets>
         <fileSet>
             <directory>target/addon/</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
         </fileSet>
     </fileSets>
 
