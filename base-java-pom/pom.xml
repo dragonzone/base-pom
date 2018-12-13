@@ -7,7 +7,7 @@
     <parent>
         <groupId>zone.dragon</groupId>
         <artifactId>base-pom</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-java-pom</artifactId>
@@ -48,8 +48,8 @@
         <jaxb.version>2.3.0</jaxb.version>
         <jetty.version>9.4.10.v20180503</jetty.version>
         <junit4.version>4.12</junit4.version>
-        <junit5.version>5.2.0</junit5.version>
-        <kotlin.version>1.2.60</kotlin.version>
+        <junit5.version>5.3.1</junit5.version>
+        <kotlin.version>1.3.11</kotlin.version>
         <logback.version>1.2.3</logback.version>
         <lombok.version>1.18.2</lombok.version>
         <mockito.version>2.18.3</mockito.version>
@@ -62,9 +62,8 @@
         <dokka.plugin.version>0.9.16</dokka.plugin.version>
         <error-prone.version>2.3.1</error-prone.version>
         <error-prone-compiler.version>2.8.2</error-prone-compiler.version>
+        <jib.plugin.version>0.10.0</jib.plugin.version>
         <lombok.plugin.version>1.18.0.0</lombok.plugin.version>
-        <surefire.plugin.jupiterProvider.version>1.2.0</surefire.plugin.jupiterProvider.version>
-        <surefire.plugin.jupiterVintage.version>5.2.0</surefire.plugin.jupiterVintage.version>
     </properties>
 
     <dependencyManagement>
@@ -144,6 +143,18 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit5.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit5.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
                 <version>${junit5.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -449,26 +460,6 @@
                     </dependencies>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.platform</groupId>
-                            <artifactId>junit-platform-surefire-provider</artifactId>
-                            <version>${surefire.plugin.jupiterProvider.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>${junit5.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.junit.vintage</groupId>
-                            <artifactId>junit-vintage-engine</artifactId>
-                            <version>${surefire.plugin.jupiterVintage.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <groupId>org.jetbrains.kotlin</groupId>
                     <version>${kotlin.version}</version>
@@ -477,6 +468,14 @@
                     <groupId>org.jetbrains.dokka</groupId>
                     <artifactId>dokka-maven-plugin</artifactId>
                     <version>${dokka.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.plugin.version}</version>
+                    <configuration>
+                        <extraDirectory>${project.basedir}/src/main/container</extraDirectory>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -509,6 +508,11 @@
                     <id>jcenter</id>
                     <name>JCenter</name>
                     <url>https://jcenter.bintray.com/</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>kotlin-eap</id>
+                    <name>Kotlin EAP</name>
+                    <url>http://dl.bintray.com/kotlin/kotlin-eap/</url>
                 </pluginRepository>
             </pluginRepositories>
             <dependencies>
