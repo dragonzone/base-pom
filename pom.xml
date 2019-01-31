@@ -64,7 +64,7 @@
         <!-- Packaging Plugin Versions -->
         <ear.plugin.version>3.0.1</ear.plugin.version>
         <ejb.plugin.version>3.0.1</ejb.plugin.version>
-        <jar.plugin.version>3.1.0</jar.plugin.version>
+        <jar.plugin.version>3.1.1</jar.plugin.version>
         <rar.plugin.version>2.4</rar.plugin.version>
         <war.plugin.version>3.2.2</war.plugin.version>
         <acr.plugin.version>3.1.0</acr.plugin.version>
@@ -76,7 +76,7 @@
         <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
         <doap.plugin.version>1.2</doap.plugin.version>
         <docck.plugin.version>1.1</docck.plugin.version>
-        <javadoc.plugin.version>3.0.0</javadoc.plugin.version>
+        <javadoc.plugin.version>3.0.1</javadoc.plugin.version>
         <jdeps.plugin.version>3.1.1</jdeps.plugin.version>
         <jxr.plugin.version>3.0.0</jxr.plugin.version>
         <linkcheck.plugin.version>1.2</linkcheck.plugin.version>
@@ -87,13 +87,13 @@
         <ant.plugin.version>2.4</ant.plugin.version>
         <antrun.plugin.version>1.8</antrun.plugin.version>
         <archetype.plugin.version>3.0.1</archetype.plugin.version>
-        <assembly.plugin.version>3.1.0</assembly.plugin.version>
+        <assembly.plugin.version>3.1.1</assembly.plugin.version>
         <dependency.plugin.version>3.1.1</dependency.plugin.version>
         <enforcer.plugin.version>3.0.0-M2</enforcer.plugin.version>
         <gpg.plugin.version>1.6</gpg.plugin.version>
-        <help.plugin.version>3.1.0</help.plugin.version>
-        <invoker.plugin.version>3.1.0</invoker.plugin.version>
-        <jarsigner.plugin.version>1.4</jarsigner.plugin.version>
+        <help.plugin.version>3.1.1</help.plugin.version>
+        <invoker.plugin.version>3.2.0</invoker.plugin.version>
+        <jarsigner.plugin.version>3.0.0</jarsigner.plugin.version>
         <patch.plugin.version>1.2</patch.plugin.version>
         <pdf.plugin.version>1.4</pdf.plugin.version>
         <plugin.plugin.version>3.6.0</plugin.plugin.version>
