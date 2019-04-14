@@ -17,8 +17,8 @@
 
     <!-- Global Properties -->
     <properties>
-        <kotlin.version>1.3.20</kotlin.version>
-        <dokka.plugin.version>0.9.16</dokka.plugin.version>
+        <kotlin.version>1.3.30</kotlin.version>
+        <dokka.plugin.version>0.9.18</dokka.plugin.version>
     </properties>
 
     <dependencyManagement>
