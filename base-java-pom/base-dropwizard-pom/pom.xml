@@ -23,6 +23,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-text.version>1.2</commons-text.version>
         <guava.version>24.1.1-jre</guava.version>
+        <hk2.version>2.5.0-b32</hk2.version>
         <jackson2.version>2.9.8</jackson2.version>
         <javax.annotation.version>1.2</javax.annotation.version>
         <javax.validation.version>1.1.0.Final</javax.validation.version>
@@ -39,6 +40,14 @@
                 <groupId>io.dropwizard</groupId>
                 <artifactId>dropwizard-bom</artifactId>
                 <version>${dropwizard.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.hk2</groupId>
+                <artifactId>hk2-bom</artifactId>
+                <version>${hk2.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
