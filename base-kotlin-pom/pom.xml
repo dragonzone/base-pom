@@ -17,7 +17,7 @@
 
     <!-- Global Properties -->
     <properties>
-        <kotlin.version>1.3.40</kotlin.version>
+        <kotlin.version>1.3.41</kotlin.version>
         <dokka.plugin.version>0.9.18</dokka.plugin.version>
     </properties>
 
@@ -141,6 +141,7 @@
                 <plugin>
                     <groupId>org.jetbrains.dokka</groupId>
                     <artifactId>dokka-maven-plugin</artifactId>
+                    <version>${dokka.plugin.version}</version>
                     <executions>
                         <execution>
                             <phase>pre-site</phase>
