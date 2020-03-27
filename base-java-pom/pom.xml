@@ -62,7 +62,7 @@
         <slf4j.version>1.7.30</slf4j.version>
         <jetbrains-annotations.version>13.0</jetbrains-annotations.version>
         <!-- Plugin Versions -->
-        <dokka.plugin.version>0.10.1</dokka.plugin.version>
+        <dokka.plugin.version>0.10.0</dokka.plugin.version>
         <error-prone.version>2.3.4</error-prone.version>
         <jib.plugin.version>1.4.0</jib.plugin.version>
         <lombok.plugin.version>1.18.12.0</lombok.plugin.version>
