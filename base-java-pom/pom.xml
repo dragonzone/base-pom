@@ -23,50 +23,53 @@
 
     <!-- Global Properties -->
     <properties>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <!-- Library Versions -->
-        <assertj.version>3.15.0</assertj.version>
-        <commons-beanutils.version>1.9.2</commons-beanutils.version>
-        <commons-codec.version>1.12</commons-codec.version>
+        <assertj.version>3.18.1</assertj.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.3</commons-collections4.version>
         <commons-compress.version>1.19</commons-compress.version>
         <commons-dbcp.version>2.1.1</commons-dbcp.version>
         <commons-email.version>1.4</commons-email.version>
         <commons-exec.version>1.3</commons-exec.version>
-        <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-io.version>2.8.0</commons-io.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
         <commons-math3.version>3.6.1</commons-math3.version>
         <commons-pool2.version>2.8.0</commons-pool2.version>
         <commons-proxy.version>1.0</commons-proxy.version>
-        <commons-text.version>1.8</commons-text.version>
-        <guava.version>28.1-jre</guava.version>
+        <commons-text.version>1.9</commons-text.version>
+        <guava.version>30.1-jre</guava.version>
         <hamcrest.version>1.3</hamcrest.version>
-        <jackson2.version>2.10.1</jackson2.version>
-        <javax-activation.version>1.1.1</javax-activation.version>
-        <javax-inject.version>1</javax-inject.version>
-        <jaxb.version>2.3.1</jaxb.version>
-        <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
-        <jetty.version>9.4.18.v20190429</jetty.version>
-        <junit4.version>4.12</junit4.version>
-        <junit5.version>5.6.1</junit5.version>
-        <kotlin.version>1.3.71</kotlin.version>
-        <kotlin-logging.version>1.4</kotlin-logging.version>
+        <jackson2.version>2.12.0</jackson2.version>
+        <jakarta.activation-api.version>2.0.0</jakarta.activation-api.version>
+        <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
+        <jakarta.inject-api>2.0.0</jakarta.inject-api>
+        <jakarta.persistance-api.version>3.0.0</jakarta.persistance-api.version>
+        <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
+        <jakarta.validation-api.version>3.0.0</jakarta.validation-api.version>
+        <jakarta.ws.rs-api.version>3.0.0</jakarta.ws.rs-api.version>
+        <jakarta.xml.bind-api.version>3.0.0</jakarta.xml.bind-api.version>
+        <jaxb.runtime.version>3.0.0</jaxb.runtime.version>
+        <jetty.version>11.0.0</jetty.version>
+        <junit4.version>4.13.1</junit4.version>
+        <junit5.version>5.7.0</junit5.version>
         <logback.version>1.2.3</logback.version>
-        <lombok.version>1.18.12</lombok.version>
-        <mockito.version>3.3.3</mockito.version>
-        <mongo-driver.version>3.4.2</mongo-driver.version>
-        <mysql-driver.version>8.0.16</mysql-driver.version>
-        <postgresql-driver.version>9.4.1208</postgresql-driver.version>
-        <cassandra-driver.version>4.5.1</cassandra-driver.version>
+        <lombok.version>1.18.16</lombok.version>
+        <mockito.version>3.6.28</mockito.version>
+        <mongo-driver.version>3.12.7</mongo-driver.version>
+        <mysql-driver.version>8.0.22</mysql-driver.version>
+        <postgresql-driver.version>42.2.18</postgresql-driver.version>
+        <cassandra-driver.version>4.9.0</cassandra-driver.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <jetbrains-annotations.version>13.0</jetbrains-annotations.version>
+        <jetbrains-annotations.version>20.1.0</jetbrains-annotations.version>
         <!-- Plugin Versions -->
-        <dokka.plugin.version>0.10.0</dokka.plugin.version>
-        <error-prone.version>2.3.4</error-prone.version>
-        <jib.plugin.version>1.4.0</jib.plugin.version>
-        <lombok.plugin.version>1.18.12.0</lombok.plugin.version>
-        <jacoco.plugin.version>0.8.5</jacoco.plugin.version>
+        <dokka.plugin.version>1.4.10.2</dokka.plugin.version>
+        <error-prone.version>2.4.0</error-prone.version>
+        <jib.plugin.version>2.7.0</jib.plugin.version>
+        <lombok.plugin.version>1.18.16.0</lombok.plugin.version>
+        <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -77,18 +80,8 @@
                 <version>${jetbrains-annotations.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>${javax-activation.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jaxb</groupId>
-                <artifactId>jaxb-runtime</artifactId>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
                 <version>${jaxb.runtime.version}</version>
             </dependency>
             <dependency>
@@ -109,11 +102,6 @@
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
-            </dependency>
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>${javax-inject.version}</version>
             </dependency>
             <!-- Test Utils -->
             <dependency>
@@ -323,66 +311,45 @@
             </dependency>
             <!-- Kotlin -->
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-annotation-processing</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>zone.dragon</groupId>
+                <artifactId>base-kotlin-pom</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Jakarta -->
+            <dependency>
+                <groupId>jakarta.activation</groupId>
+                <artifactId>jakarta.activation-api</artifactId>
+                <version>${jakarta.activation-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-compiler</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>${jakarta.annotation-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-reflect</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>jakarta.inject</groupId>
+                <artifactId>jakarta.inject-api</artifactId>
+                <version>${jakarta.inject-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>jakarta.persistance</groupId>
+                <artifactId>jakarta.persistance-api</artifactId>
+                <version>${jakarta.persistance-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-common</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta.servlet-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jdk7</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta.validation-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jdk8</artifactId>
-                <version>${kotlin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-js</artifactId>
-                <version>${kotlin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-test</artifactId>
-                <version>${kotlin.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-test-common</artifactId>
-                <version>${kotlin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-test-junit</artifactId>
-                <version>${kotlin.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.github.microutils</groupId>
-                <artifactId>kotlin-logging</artifactId>
-                <version>${kotlin-logging.version}</version>
+                <groupId>jakarta.ws.rs</groupId>
+                <artifactId>jakarta.ws.rs-api</artifactId>
+                <version>${jakarta.ws.rs-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -545,6 +512,7 @@
             </activation>
             <properties>
                 <kotlin.experimental>true</kotlin.experimental>
+                <kotlin.version>1.4.21</kotlin.version>
             </properties>
             <pluginRepositories>
                 <pluginRepository>
@@ -591,6 +559,18 @@
                                 </configuration>
                             </execution>
                         </executions>
+                        <configuration>
+                            <compilerPlugins>
+                                <plugin>kotlinx-serialization</plugin>
+                            </compilerPlugins>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.jetbrains.kotlin</groupId>
+                                <artifactId>kotlin-maven-serialization</artifactId>
+                                <version>${kotlin.version}</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
