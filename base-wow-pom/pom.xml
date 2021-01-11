@@ -68,7 +68,7 @@
                         <dependency>
                             <groupId>zone.dragon</groupId>
                             <artifactId>wow-addon-descriptor</artifactId>
-                            <version>4.0$\{revision}</version>
+                            <version>4.0.${revision}</version>
                         </dependency>
                     </dependencies>
                     <configuration>

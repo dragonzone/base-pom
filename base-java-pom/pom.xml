@@ -66,11 +66,18 @@
         <slf4j.version>1.7.30</slf4j.version>
         <jetbrains-annotations.version>20.1.0</jetbrains-annotations.version>
         <!-- Plugin Versions -->
-        <dokka.plugin.version>1.4.10.2</dokka.plugin.version>
         <error-prone.version>2.4.0</error-prone.version>
         <jib.plugin.version>2.7.0</jib.plugin.version>
         <lombok.plugin.version>1.18.16.0</lombok.plugin.version>
         <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
+        <!-- Kotlin -->
+        <kotlin.version>1.4.21</kotlin.version>
+        <kotlinx.coroutines.version>1.4.2</kotlinx.coroutines.version>
+        <kotlinx.serialization.version>1.0.1</kotlinx.serialization.version>
+        <ktor.version>1.4.1</ktor.version>
+        <kotlin-logging.version>2.0.4</kotlin-logging.version>
+        <mockito.kotlin.version>2.2.0</mockito.kotlin.version>
+        <dokka.plugin.version>1.4.10.2</dokka.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -310,12 +317,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- Kotlin -->
-            <dependency>
-                <groupId>zone.dragon</groupId>
-                <artifactId>base-kotlin-pom</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <!-- Jakarta -->
             <dependency>
                 <groupId>jakarta.activation</groupId>
@@ -352,6 +353,90 @@
                 <artifactId>jakarta.ws.rs-api</artifactId>
                 <version>${jakarta.ws.rs-api.version}</version>
             </dependency>
+            <!-- Kotlin -->
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-bom</artifactId>
+                <version>${kotlin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-coroutines-bom</artifactId>
+                <version>${kotlinx.coroutines.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-bom</artifactId>
+                <version>${ktor.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-android-extensions-runtime</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-android-extensions</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-annotation-processing</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-annotations-jvm</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-serialization</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.microutils</groupId>
+                <artifactId>kotlin-logging</artifactId>
+                <version>${kotlin-logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nhaarman.mockitokotlin2</groupId>
+                <artifactId>mockito-kotlin</artifactId>
+                <version>${mockito.kotlin.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- KotlinX Serialization -->
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-serialization-cbor</artifactId>
+                <version>${kotlinx.serialization.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-serialization-json</artifactId>
+                <version>${kotlinx.serialization.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-serialization-hocon</artifactId>
+                <version>${kotlinx.serialization.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-serialization-properties</artifactId>
+                <version>${kotlinx.serialization.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-serialization-protobuf</artifactId>
+                <version>${kotlinx.serialization.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -370,6 +455,20 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.plugin.version}</version>
                     <executions>
+                        <execution>
+                            <id>instrument-coverage</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>coverage-report</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
                         <execution>
                             <id>coverage-check</id>
                             <phase>verify</phase>
@@ -460,7 +559,11 @@
                     <artifactId>jib-maven-plugin</artifactId>
                     <version>${jib.plugin.version}</version>
                     <configuration>
-                        <extraDirectory>${project.basedir}/src/main/container</extraDirectory>
+                        <extraDirectories>
+                            <paths>
+                                <path>${project.basedir}/src/main/container</path>
+                            </paths>
+                        </extraDirectories>
                     </configuration>
                 </plugin>
             </plugins>
@@ -513,7 +616,6 @@
             </activation>
             <properties>
                 <kotlin.experimental>true</kotlin.experimental>
-                <kotlin.version>1.4.21</kotlin.version>
             </properties>
             <pluginRepositories>
                 <pluginRepository>
@@ -737,6 +839,40 @@
                                     <toolchains>
                                         <jdk>
                                             <version>[11,12)</version>
+                                        </jdk>
+                                    </toolchains>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>toolchain-jdk-17</id>
+            <activation>
+                <file>
+                    <exists>${user.home}/.m2/toolchains.xml</exists>
+                </file>
+                <property>
+                    <name>java.version</name>
+                    <value>17</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-toolchains-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>toolchain-jdk-17</id>
+                                <goals>
+                                    <goal>toolchain</goal>
+                                </goals>
+                                <configuration>
+                                    <toolchains>
+                                        <jdk>
+                                            <version>[17,18)</version>
                                         </jdk>
                                     </toolchains>
                                 </configuration>
