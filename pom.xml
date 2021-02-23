@@ -6,7 +6,7 @@
 
     <groupId>zone.dragon</groupId>
     <artifactId>base-pom</artifactId>
-    <version>4.0.${revision}</version>
+    <version>4.1.${revision}</version>
     <packaging>pom</packaging>
 
     <name>DragonZone :: Base POM</name>
@@ -51,6 +51,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <deployAtEnd>true</deployAtEnd>
+        <minimum.maven.version>3.6.3</minimum.maven.version>
         <!-- CI Friendly Versioning -->
         <revision>99-SNAPSHOT</revision>
         <sha1>HEAD</sha1>
@@ -117,7 +118,8 @@
         <buildnumber.plugin.version>1.4</buildnumber.plugin.version>
         <versions.plugin.version>2.7</versions.plugin.version>
         <nexus-staging-maven.plugin.version>1.6.8</nexus-staging-maven.plugin.version>
-        <flatten-maven-plugin>1.2.2</flatten-maven-plugin>
+        <flatten-maven-plugin.version>1.2.2</flatten-maven-plugin.version>
+        <deployable-pom-maven-plugin.version>1.0.0</deployable-pom-maven-plugin.version>
     </properties>
 
     <!-- External Repositories -->
@@ -431,7 +433,7 @@
                                         <version>11.0.0</version>
                                     </requireJavaVersion>
                                     <requireMavenVersion>
-                                        <version>3.5.0</version>
+                                        <version>${minimum.maven.version}</version>
                                     </requireMavenVersion>
                                     <requireReleaseDeps>
                                         <onlyWhenRelease>true</onlyWhenRelease>
@@ -553,31 +555,21 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
-                    <version>${flatten-maven-plugin}</version>
+                    <version>${flatten-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>zone.dragon.maven.plugin</groupId>
+                    <artifactId>deployable-pom-maven-plugin</artifactId>
+                    <version>${deployable-pom-maven-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>flatten</id>
+                            <id>create-deployable-pom</id>
                             <phase>process-resources</phase>
                             <goals>
-                                <goal>flatten</goal>
-                            </goals>
-                            <configuration>
-                                <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>clean</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>clean</goal>
+                                <goal>resolve-ci-properties</goal>
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <outputDirectory>${project.build.directory}</outputDirectory>
-                        <flattenedPomFilename>flattened-pom.xml</flattenedPomFilename>
-                        <updatePomFile>true</updatePomFile>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -590,8 +582,8 @@
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
+                <groupId>zone.dragon.maven.plugin</groupId>
+                <artifactId>deployable-pom-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

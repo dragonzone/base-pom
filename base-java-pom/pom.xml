@@ -7,8 +7,7 @@
     <parent>
         <groupId>zone.dragon</groupId>
         <artifactId>base-pom</artifactId>
-        <version>4.0.${revision}</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>4.1.${revision}</version>
     </parent>
 
     <artifactId>base-java-pom</artifactId>
@@ -20,6 +19,7 @@
     <modules>
         <module>base-dropwizard-1x-pom</module>
         <module>base-dropwizard-2x-pom</module>
+        <module>base-maven-plugin-pom</module>
     </modules>
 
     <!-- Global Properties -->
@@ -66,15 +66,15 @@
         <slf4j.version>1.7.30</slf4j.version>
         <jetbrains-annotations.version>20.1.0</jetbrains-annotations.version>
         <!-- Plugin Versions -->
-        <error-prone.version>2.4.0</error-prone.version>
+        <error-prone.version>2.5.1</error-prone.version>
         <jib.plugin.version>2.7.0</jib.plugin.version>
         <lombok.plugin.version>1.18.16.0</lombok.plugin.version>
         <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
         <!-- Kotlin -->
-        <kotlin.version>1.4.21</kotlin.version>
+        <kotlin.version>1.4.30</kotlin.version>
         <kotlinx.coroutines.version>1.4.2</kotlinx.coroutines.version>
-        <kotlinx.serialization.version>1.0.1</kotlinx.serialization.version>
-        <ktor.version>1.4.1</ktor.version>
+        <kotlinx.serialization.version>1.1.0-RC</kotlinx.serialization.version>
+        <ktor.version>1.5.1</ktor.version>
         <kotlin-logging.version>2.0.4</kotlin-logging.version>
         <mockito.kotlin.version>2.2.0</mockito.kotlin.version>
         <dokka.plugin.version>1.4.10.2</dokka.plugin.version>
@@ -584,6 +584,13 @@
     <profiles>
         <profile>
             <id>error-prone</id>
+            <activation>
+                <jdk>[8,16)</jdk>
+                <property>
+                    <name>error-prone</name>
+                    <value>!false</value>
+                </property>
+            </activation>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -611,7 +618,7 @@
             <id>kotlin-java</id>
             <activation>
                 <file>
-                    <exists>src/main/kotlin</exists>
+                    <exists>src/main/kotlin/</exists>
                 </file>
             </activation>
             <properties>
@@ -763,7 +770,7 @@
         <profile>
             <id>java-9-support</id>
             <activation>
-                <jdk>[1.9</jdk>
+                <jdk>[9</jdk>
             </activation>
             <build>
                 <pluginManagement>

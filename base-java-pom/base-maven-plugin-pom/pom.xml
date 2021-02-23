@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>zone.dragon</groupId>
+        <artifactId>base-java-pom</artifactId>
+        <version>4.1.${revision}</version>
+    </parent>
+
+    <artifactId>base-maven-plugin-pom</artifactId>
+    <packaging>pom</packaging>
+
+    <name>DragonZone :: Base POM for Maven Plugins</name>
+    <description>POM file for managing DragonZone maven plugins</description>
+
+    <!-- Global Properties -->
+    <properties>
+        <maven.tools.version>3.6.0</maven.tools.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven</artifactId>
+                <version>${minimum.maven.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-tools</artifactId>
+                <version>${maven.tools.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
