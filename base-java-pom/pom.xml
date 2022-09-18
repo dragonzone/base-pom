@@ -19,6 +19,7 @@
     <modules>
         <module>base-dropwizard-1x-pom</module>
         <module>base-dropwizard-2x-pom</module>
+        <module>base-dropwizard-4x-pom</module>
         <module>base-maven-plugin-pom</module>
     </modules>
 
@@ -47,7 +48,7 @@
         <jackson2.version>2.12.0</jackson2.version>
         <jakarta.activation-api.version>2.1.0</jakarta.activation-api.version>
         <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
-        <jakarta.inject-api>2.0.1</jakarta.inject-api>
+        <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
         <jakarta.persistance-api.version>3.1.0</jakarta.persistance-api.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
