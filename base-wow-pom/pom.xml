@@ -7,7 +7,7 @@
     <parent>
         <groupId>zone.dragon</groupId>
         <artifactId>base-pom</artifactId>
-        <version>4.1.${revision}</version>
+        <version>5.0.${revision}</version>
     </parent>
 
     <artifactId>base-wow-pom</artifactId>
@@ -67,7 +67,7 @@
                         <dependency>
                             <groupId>zone.dragon</groupId>
                             <artifactId>wow-addon-descriptor</artifactId>
-                            <version>4.1.${revision}</version>
+                            <version>5.0.{revision}</version>
                         </dependency>
                     </dependencies>
                     <configuration>
