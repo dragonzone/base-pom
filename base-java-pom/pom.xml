@@ -63,7 +63,7 @@
         <mockito.version>4.8.0</mockito.version>
         <mongo-driver.version>3.12.11</mongo-driver.version>
         <mysql-driver.version>8.0.30</mysql-driver.version>
-        <postgresql-driver.version>42.5.0</postgresql-driver.version>
+        <postgresql-driver.version>42.5.1</postgresql-driver.version>
         <cassandra-driver.version>4.14.1</cassandra-driver.version>
         <slf4j.version>2.0.1</slf4j.version>
         <jetbrains-annotations.version>23.0.0</jetbrains-annotations.version>
