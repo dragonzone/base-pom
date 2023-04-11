@@ -147,6 +147,16 @@
                             <goals>
                                 <goal>compile</goal>
                             </goals>
+                            <configuration>
+                                <sourceDirs>
+                                    <sourceDir>${project.build.sourceDirectory}</sourceDir>
+                                    <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                                    <sourceDir>${project.basedir}/src/main/kotlin-jvm</sourceDir>
+                                </sourceDirs>
+                                <args>
+                                    <arg>-Xmulti-platform</arg>
+                                </args>
+                            </configuration>
                         </execution>
                         <execution>
                             <id>compile-js</id>
@@ -155,9 +165,15 @@
                                 <goal>js</goal>
                             </goals>
                             <configuration>
-                                <sourceDirs>${project.build.sourceDirectory}</sourceDirs>  <!-- Replace with your path -->
+                                <sourceDirs>
+                                    <sourceDir>${project.build.sourceDirectory}</sourceDir>
+                                    <sourceDir>${project.basedir}/src/main/kotlin-js</sourceDir>
+                                </sourceDirs>
                                 <outputFile>${project.build.outputDirectory}/${project.artifactId}.js</outputFile>
                                 <sourceMap>true</sourceMap>
+                                <args>
+                                    <arg>-Xmulti-platform</arg>
+                                </args>
                             </configuration>
                         </execution>
                         <execution>
@@ -180,6 +196,46 @@
                             <version>${kotlin.version}</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <executions>
+                        <!-- Replacing default-compile as it is treated specially by maven -->
+                        <execution>
+                            <id>default-compile</id>
+                            <phase>none</phase>
+                        </execution>
+                        <!-- Replacing default-testCompile as it is treated specially by maven -->
+                        <execution>
+                            <id>default-testCompile</id>
+                            <phase>none</phase>
+                        </execution>
+                        <execution>
+                            <id>kotlin-java-compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <includes>
+                                    <include>${project.basedir}/src/main/java/**/*.java</include>
+                                </includes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>kotlin-java-test-compile</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                            <configuration>
+                                <testIncludes>
+                                    <testInclude>${project.basedir}/src/test/java/**/*.java</testInclude>
+                                </testIncludes>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.jetbrains.dokka</groupId>
