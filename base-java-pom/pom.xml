@@ -25,6 +25,7 @@
         <module>kotlin-1.6-deps</module>
         <module>kotlin-1.7-deps</module>
         <module>kotlin-1.8-deps</module>
+        <module>kotlin-1.9-deps</module>
     </modules>
 
     <!-- Global Properties -->
@@ -78,7 +79,7 @@
         <!-- Kotlin -->
         <dokka.plugin.version>1.8.10</dokka.plugin.version>
         <kotlin.plugin.version>1.8.21</kotlin.plugin.version>
-        <kotlin.release>1.8</kotlin.release>
+        <kotlin.release>1.9</kotlin.release>
     </properties>
 
     <dependencyManagement>

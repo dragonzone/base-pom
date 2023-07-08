@@ -9,15 +9,15 @@
         <version>5.0.${revision}</version>
     </parent>
 
-    <artifactId>kotlin-1.8-deps</artifactId>
+    <artifactId>kotlin-1.9-deps</artifactId>
     <packaging>pom</packaging>
 
-    <name>DragonZone :: Kotlin 1.8 Dependencies</name>
-    <description>Bill-of-Materials for Common Kotlin 1.8 Dependencies</description>
+    <name>DragonZone :: Kotlin 1.9 Dependencies</name>
+    <description>Bill-of-Materials for Common Kotlin 1.9 Dependencies</description>
 
     <!-- Global Properties -->
     <properties>
-        <kotlin.version>1.8.22</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <kotlinx.coroutines.version>1.7.2</kotlinx.coroutines.version>
         <kotlinx.serialization.version>1.5.1</kotlinx.serialization.version>
         <ktor.version>2.3.2</ktor.version>
