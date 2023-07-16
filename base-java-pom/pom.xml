@@ -19,6 +19,7 @@
     <modules>
         <module>base-dropwizard-1x-pom</module>
         <module>base-dropwizard-2x-pom</module>
+        <module>base-dropwizard-3x-pom</module>
         <module>base-dropwizard-4x-pom</module>
         <module>base-maven-plugin-pom</module>
         <module>kotlin-1.5-deps</module>
