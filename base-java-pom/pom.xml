@@ -19,6 +19,7 @@
     <modules>
         <module>base-dropwizard-1x-pom</module>
         <module>base-dropwizard-2x-pom</module>
+        <module>base-dropwizard-3x-pom</module>
         <module>base-dropwizard-4x-pom</module>
         <module>base-maven-plugin-pom</module>
         <module>kotlin-1.5-deps</module>
@@ -47,7 +48,7 @@
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <commons-proxy.version>1.0</commons-proxy.version>
         <commons-text.version>1.10</commons-text.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <hamcrest.version>2.2</hamcrest.version>
         <jackson2.version>2.14.2</jackson2.version>
         <jakarta.activation-api.version>2.1.1</jakarta.activation-api.version>
