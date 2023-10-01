@@ -79,7 +79,7 @@
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <!-- Kotlin -->
         <dokka.plugin.version>1.8.10</dokka.plugin.version>
-        <kotlin.plugin.version>1.8.21</kotlin.plugin.version>
+        <kotlin.plugin.version>1.9.10</kotlin.plugin.version>
         <kotlin.release>1.9</kotlin.release>
     </properties>
 
