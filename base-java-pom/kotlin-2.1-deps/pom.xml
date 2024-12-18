@@ -22,14 +22,14 @@
         <kotlinx.serialization.version>1.7.3</kotlinx.serialization.version>
         <ktor.version>3.0.2</ktor.version>
         <assertk.version>0.28.1</assertk.version>
-        <kotlin-logging.version>7.0.0</kotlin-logging.version>
+        <kotlin-logging.version>7.0.3</kotlin-logging.version>
         <mockito-kotlin.version>5.4.1</mockito-kotlin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.github.microutils</groupId>
+                <groupId>io.github.oshai</groupId>
                 <artifactId>kotlin-logging-jvm</artifactId>
                 <version>${kotlin-logging.version}</version>
             </dependency>
