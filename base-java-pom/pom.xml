@@ -27,6 +27,8 @@
         <module>kotlin-1.7-deps</module>
         <module>kotlin-1.8-deps</module>
         <module>kotlin-1.9-deps</module>
+        <module>kotlin-2.0-deps</module>
+        <module>kotlin-2.1-deps</module>
     </modules>
 
     <!-- Global Properties -->
@@ -78,9 +80,9 @@
         <lombok.plugin.version>1.18.20.0</lombok.plugin.version>
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <!-- Kotlin -->
-        <dokka.plugin.version>1.8.10</dokka.plugin.version>
-        <kotlin.plugin.version>1.9.10</kotlin.plugin.version>
-        <kotlin.release>1.9</kotlin.release>
+        <dokka.plugin.version>2.0.0</dokka.plugin.version>
+        <kotlin.plugin.version>2.1.0</kotlin.plugin.version>
+        <kotlin.release>2.1</kotlin.release>
     </properties>
 
     <dependencyManagement>
