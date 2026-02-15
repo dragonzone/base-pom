@@ -21,7 +21,12 @@
         <module>base-dropwizard-2x-pom</module>
         <module>base-dropwizard-3x-pom</module>
         <module>base-dropwizard-4x-pom</module>
+        <module>base-dropwizard-bundle-1x-pom</module>
+        <module>base-dropwizard-bundle-2x-pom</module>
+        <module>base-dropwizard-bundle-3x-pom</module>
+        <module>base-dropwizard-bundle-4x-pom</module>
         <module>base-maven-plugin-pom</module>
+        <module>compatibility-tests</module>
         <module>kotlin-1.5-deps</module>
         <module>kotlin-1.6-deps</module>
         <module>kotlin-1.7-deps</module>
@@ -29,6 +34,8 @@
         <module>kotlin-1.9-deps</module>
         <module>kotlin-2.0-deps</module>
         <module>kotlin-2.1-deps</module>
+        <module>kotlin-2.2-deps</module>
+        <module>kotlin-2.3-deps</module>
     </modules>
 
     <!-- Global Properties -->
@@ -37,52 +44,57 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <!-- Library Versions -->
         <assertj.version>3.24.2</assertj.version>
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <commons-codec.version>1.17.1</commons-codec.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-compress.version>1.27.1</commons-compress.version>
-        <commons-dbcp.version>2.13.0</commons-dbcp.version>
+        <commons-beanutils.version>1.11.0</commons-beanutils.version>
+        <commons-codec.version>1.20.0</commons-codec.version>
+        <commons-collections4.version>4.5.0</commons-collections4.version>
+        <commons-compress.version>1.28.0</commons-compress.version>
+        <commons-dbcp.version>2.14.0</commons-dbcp.version>
         <commons-email.version>1.6.0</commons-email.version>
-        <commons-exec.version>1.4.0</commons-exec.version>
-        <commons-io.version>2.18.0</commons-io.version>
-        <commons-lang3.version>3.17.0</commons-lang3.version>
+        <commons-exec.version>1.6.0</commons-exec.version>
+        <commons-io.version>2.21.0</commons-io.version>
+        <commons-lang3.version>3.20.0</commons-lang3.version>
         <commons-math3.version>3.6.1</commons-math3.version>
-        <commons-pool2.version>2.12.0</commons-pool2.version>
+        <commons-pool2.version>2.13.1</commons-pool2.version>
         <commons-proxy.version>1.0</commons-proxy.version>
-        <commons-text.version>1.13.0</commons-text.version>
-        <guava.version>33.4.0-jre</guava.version>
-        <hamcrest.version>2.2</hamcrest.version>
-        <jackson2.version>2.14.2</jackson2.version>
-        <jakarta.activation-api.version>2.1.3</jakarta.activation-api.version>
+        <commons-text.version>1.15.0</commons-text.version>
+        <grpc.version>1.79.0</grpc.version>
+        <grpc.kotlin.version>1.5.0</grpc.kotlin.version>
+        <guava.version>33.5.0-jre</guava.version>
+        <hamcrest.version>3.0</hamcrest.version>
+        <jackson2.version>2.21.0</jackson2.version>
+        <jakarta.activation-api.version>2.1.4</jakarta.activation-api.version>
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
         <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
-        <jakarta.persistance-api.version>3.2.0</jakarta.persistance-api.version>
+        <jakarta.persistence-api.version>3.2.0</jakarta.persistence-api.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
-        <jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
+        <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
         <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
         <jakarta.xml.bind-api.version>4.0.2</jakarta.xml.bind-api.version>
-        <jaxb.runtime.version>4.0.0</jaxb.runtime.version>
-        <jetty.version>12.0.16</jetty.version>
+        <jaxb.runtime.version>4.0.6</jaxb.runtime.version>
+        <jetty.version>12.1.5</jetty.version>
         <junit4.version>4.13.2</junit4.version>
-        <junit5.version>5.11.4</junit5.version>
-        <logback.version>1.5.12</logback.version>
-        <lombok.version>1.18.36</lombok.version>
-        <mockito.version>5.14.2</mockito.version>
-        <mongo-driver.version>5.2.1</mongo-driver.version>
-        <mysql-driver.version>9.1.0</mysql-driver.version>
-        <postgresql-driver.version>42.7.4</postgresql-driver.version>
-        <cassandra-driver.version>4.18.1</cassandra-driver.version>
-        <slf4j.version>2.0.16</slf4j.version>
-        <jetbrains-annotations.version>23.0.0</jetbrains-annotations.version>
+        <junit5.version>6.0.2</junit5.version>
+        <logback.version>1.5.31</logback.version>
+        <logback.access.version>2.0.9</logback.access.version>
+        <lombok.version>1.18.42</lombok.version>
+        <mockito.version>5.21.0</mockito.version>
+        <mongo-driver.version>5.6.2</mongo-driver.version>
+        <mysql-driver.version>9.5.0</mysql-driver.version>
+        <postgresql-driver.version>42.7.9</postgresql-driver.version>
+        <protobuf.version>4.33.5</protobuf.version>
+        <cassandra-driver.version>4.19.2</cassandra-driver.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <jetbrains-annotations.version>26.0.2</jetbrains-annotations.version>
         <!-- Plugin Versions -->
-        <error-prone.version>2.36.0</error-prone.version>
-        <jib.plugin.version>3.4.4</jib.plugin.version>
+        <error-prone.version>2.46.0</error-prone.version>
+        <jib.plugin.version>3.5.1</jib.plugin.version>
         <lombok.plugin.version>1.18.20.0</lombok.plugin.version>
-        <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
+        <jacoco.plugin.version>0.8.14</jacoco.plugin.version>
+        <protobuf-plugin.version>4.1.3</protobuf-plugin.version>
         <!-- Kotlin -->
-        <dokka.plugin.version>2.0.0</dokka.plugin.version>
-        <kotlin.plugin.version>2.1.0</kotlin.plugin.version>
-        <kotlin.release>2.1</kotlin.release>
+        <dokka.plugin.version>2.1.0</dokka.plugin.version>
+        <kotlin.plugin.version>2.3.0</kotlin.plugin.version>
+        <kotlin.release>2.3</kotlin.release>
     </properties>
 
     <dependencyManagement>
@@ -105,6 +117,25 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-bom</artifactId>
+                <version>${protobuf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-kotlin-stub</artifactId>
+                <version>${grpc.kotlin.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
@@ -115,6 +146,11 @@
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_annotations</artifactId>
+                <version>${error-prone.version}</version>
             </dependency>
             <!-- Test Utils -->
             <dependency>
@@ -230,6 +266,26 @@
                 <artifactId>logback-access</artifactId>
                 <version>${logback.version}</version>
             </dependency>
+            <dependency>
+                <groupId>ch.qos.logback.access</groupId>
+                <artifactId>logback-access-common</artifactId>
+                <version>${logback.access.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback.access</groupId>
+                <artifactId>logback-access-jetty11</artifactId>
+                <version>${logback.access.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback.access</groupId>
+                <artifactId>logback-access-jetty12</artifactId>
+                <version>${logback.access.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback.access</groupId>
+                <artifactId>logback-access-tomcat</artifactId>
+                <version>${logback.access.version}</version>
+            </dependency>
             <!-- Simple Logging Facade for Java -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -292,7 +348,7 @@
             <!-- Database Drivers -->
             <dependency>
                 <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-drvier-sync</artifactId>
+                <artifactId>mongodb-driver-sync</artifactId>
                 <version>${mongo-driver.version}</version>
             </dependency>
             <dependency>
@@ -329,9 +385,9 @@
                 <version>${jakarta.inject-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>jakarta.persistance</groupId>
-                <artifactId>jakarta.persistance-api</artifactId>
-                <version>${jakarta.persistance-api.version}</version>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta.persistence-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.servlet</groupId>
@@ -475,6 +531,15 @@
                         </extraDirectories>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>io.github.ascopes</groupId>
+                    <artifactId>protobuf-maven-plugin</artifactId>
+                    <version>${protobuf-plugin.version}</version>
+                    <configuration>
+                        <kotlinEnabled>true</kotlinEnabled>
+                        <protoc>${protobuf.version}</protoc>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -494,7 +559,7 @@
         <profile>
             <id>error-prone</id>
             <activation>
-                <jdk>[8,17]</jdk>
+                <jdk>[8,25]</jdk>
                 <property>
                     <name>error-prone</name>
                     <value>!false</value>
@@ -560,21 +625,48 @@
             </pluginRepositories>
             <build>
                 <plugins>
+                    <!-- Attach additional sources and test sources for Kotlin; We don't use the sourceDirs configuration in the kotlin
+                         plugin itself because that breaks generated source directories that get added -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>add-kotlin-source-dirs</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.basedir}/src/main/kotlin</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>add-kotlin-test-source-dirs</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>add-test-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.basedir}/src/test/kotlin</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <artifactId>kotlin-maven-plugin</artifactId>
                         <groupId>org.jetbrains.kotlin</groupId>
+                        <extensions>true</extensions>
                         <executions>
                             <execution>
                                 <id>kotlin-kapt</id>
                                 <goals>
                                     <goal>kapt</goal>
                                 </goals>
-                                <configuration>
-                                    <sourceDirs>
-                                        <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-                                        <sourceDir>${project.basedir}/src/main/java</sourceDir>
-                                    </sourceDirs>
-                                </configuration>
                             </execution>
                             <execution>
                                 <id>kotlin-compile</id>
@@ -583,10 +675,6 @@
                                 </goals>
                                 <configuration>
                                     <javaParameters>true</javaParameters>
-                                    <sourceDirs>
-                                        <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-                                        <sourceDir>${project.basedir}/src/main/java</sourceDir>
-                                    </sourceDirs>
                                 </configuration>
                             </execution>
                             <execution>
@@ -594,12 +682,6 @@
                                 <goals>
                                     <goal>test-kapt</goal>
                                 </goals>
-                                <configuration>
-                                    <sourceDirs>
-                                        <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
-                                        <sourceDir>${project.basedir}/src/test/java</sourceDir>
-                                    </sourceDirs>
-                                </configuration>
                             </execution>
                             <execution>
                                 <id>kotlin-test-compile</id>
@@ -607,12 +689,6 @@
                                     <goal>test-kapt</goal>
                                     <goal>test-compile</goal>
                                 </goals>
-                                <configuration>
-                                    <sourceDirs>
-                                        <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
-                                        <sourceDir>${project.basedir}/src/test/java</sourceDir>
-                                    </sourceDirs>
-                                </configuration>
                             </execution>
                         </executions>
                         <configuration>
@@ -643,36 +719,6 @@
                                 <version>${kotlin.plugin.version}</version>
                             </dependency>
                         </dependencies>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <executions>
-                            <!-- Replacing default-compile as it is treated specially by maven -->
-                            <execution>
-                                <id>default-compile</id>
-                                <phase>none</phase>
-                            </execution>
-                            <!-- Replacing default-testCompile as it is treated specially by maven -->
-                            <execution>
-                                <id>default-testCompile</id>
-                                <phase>none</phase>
-                            </execution>
-                            <execution>
-                                <id>kotlin-java-compile</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>kotlin-java-test-compile</id>
-                                <phase>test-compile</phase>
-                                <goals>
-                                    <goal>testCompile</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
@@ -750,103 +796,74 @@
             </build>
         </profile>
         <profile>
-            <id>toolchain-jdk-8</id>
+            <id>protobuf-kotlin</id>
             <activation>
                 <file>
-                    <exists>${user.home}/.m2/toolchains.xml</exists>
+                    <exists>${project.basedir}/src/main/protobuf/</exists>
                 </file>
-                <property>
-                    <name>java.version</name>
-                    <value>8</value>
-                </property>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-kotlin</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.jetbrains</groupId>
+                    <artifactId>annotations</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-stdlib</artifactId>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-toolchains-plugin</artifactId>
+                        <groupId>io.github.ascopes</groupId>
+                        <artifactId>protobuf-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>toolchain-jdk-8</id>
+                                <id>generate-protobuf-stubs</id>
+                                <phase>generate-sources</phase>
                                 <goals>
-                                    <goal>toolchain</goal>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>generate-protobuf-test-stubs</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>generate-test</goal>
                                 </goals>
                                 <configuration>
-                                    <toolchains>
-                                        <jdk>
-                                            <version>[8,9)</version>
-                                        </jdk>
-                                    </toolchains>
+                                    <failOnMissingSources>false</failOnMissingSources>
+                                    <importPaths>
+                                        <path>${project.basedir}/src/main/protobuf</path>
+                                    </importPaths>
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>toolchain-jdk-11</id>
-            <activation>
-                <file>
-                    <exists>${user.home}/.m2/toolchains.xml</exists>
-                </file>
-                <property>
-                    <name>java.version</name>
-                    <value>11</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-toolchains-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>toolchain-jdk-11</id>
-                                <goals>
-                                    <goal>toolchain</goal>
-                                </goals>
-                                <configuration>
-                                    <toolchains>
-                                        <jdk>
-                                            <version>[11,12)</version>
-                                        </jdk>
-                                    </toolchains>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>toolchain-jdk-17</id>
-            <activation>
-                <file>
-                    <exists>${user.home}/.m2/toolchains.xml</exists>
-                </file>
-                <property>
-                    <name>java.version</name>
-                    <value>17</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-toolchains-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>toolchain-jdk-17</id>
-                                <goals>
-                                    <goal>toolchain</goal>
-                                </goals>
-                                <configuration>
-                                    <toolchains>
-                                        <jdk>
-                                            <version>[17,18)</version>
-                                        </jdk>
-                                    </toolchains>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <configuration>
+                            <kotlinEnabled>true</kotlinEnabled>
+                            <plugins>
+                                <plugin kind="binary-maven">
+                                    <groupId>io.grpc</groupId>
+                                    <artifactId>protoc-gen-grpc-java</artifactId>
+                                    <version>${grpc.version}</version>
+                                </plugin>
+                                <plugin kind="jvm-maven">
+                                    <groupId>io.grpc</groupId>
+                                    <artifactId>protoc-gen-grpc-kotlin</artifactId>
+                                    <classifier>jdk8</classifier>
+                                    <version>${grpc.kotlin.version}</version>
+                                    <mainClass>io.grpc.kotlin.generator.GeneratorRunner</mainClass>
+                                </plugin>
+                            </plugins>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
