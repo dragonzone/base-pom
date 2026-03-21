@@ -799,7 +799,7 @@
             <id>protobuf-kotlin</id>
             <activation>
                 <file>
-                    <exists>${project.basedir}/src/main/protobuf/</exists>
+                    <exists>${basedir}/src/main/protobuf/</exists>
                 </file>
             </activation>
             <dependencies>
