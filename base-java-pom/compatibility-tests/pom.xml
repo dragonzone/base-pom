@@ -21,10 +21,12 @@
         <module>dropwizard-2x</module>
         <module>dropwizard-3x</module>
         <module>dropwizard-4x</module>
+        <module>dropwizard-5x</module>
         <module>dropwizard-bundle-1x</module>
         <module>dropwizard-bundle-2x</module>
         <module>dropwizard-bundle-3x</module>
         <module>dropwizard-bundle-4x</module>
+        <module>dropwizard-bundle-5x</module>
         <!-- No kotlin 1.5 compatibility tests because
             kotlin compiler 2.0.21 doesn't support JDK 25+ and
             kotlin compiler 2.1.0+ doesn't support kotlin 1.5-->
