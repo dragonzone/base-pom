@@ -23,8 +23,8 @@
         <kotlinx.serialization.version>1.9.0</kotlinx.serialization.version>
         <ktor.version>3.3.3</ktor.version>
         <assertk.version>0.28.1</assertk.version>
-        <kotlin-logging.version>7.0.14</kotlin-logging.version>
-        <mockito-kotlin.version>6.2.3</mockito-kotlin.version>
+        <kotlin-logging.version>8.0.01</kotlin-logging.version>
+        <mockito-kotlin.version>6.3.0</mockito-kotlin.version>
     </properties>
 
     <dependencyManagement>
