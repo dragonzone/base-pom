@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package zone.dragon.base_pom;
+
+import "google/protobuf/timestamp.proto";
+import "RuntimeMessages.proto";
+
+option java_multiple_files = true;
+
+service TestRuntimeMessageService {
+  rpc SendMessage (TestRuntimeMessage) returns (RuntimeMessage);
+}
+
+message TestRuntimeMessage {
+  google.protobuf.Timestamp expiry = 1;
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>zone.dragon</groupId>
+        <artifactId>base-java-pom</artifactId>
+        <version>5.0.${revision}</version>
+    </parent>
+
+    <artifactId>base-java-pom-compatibility-tests</artifactId>
+    <packaging>pom</packaging>
+
+    <name>DragonZone :: Compatibility Tests</name>
+    <description>Compilation and Compatibility Tests for manged JVM libraries and plugins</description>
+
+    <modules>
+        <module>jvm-libraries</module>
+        <module>dropwizard-1x</module>
+        <module>dropwizard-2x</module>
+        <module>dropwizard-3x</module>
+        <module>dropwizard-4x</module>
+        <module>dropwizard-5x</module>
+        <module>dropwizard-bundle-1x</module>
+        <module>dropwizard-bundle-2x</module>
+        <module>dropwizard-bundle-3x</module>
+        <module>dropwizard-bundle-4x</module>
+        <module>dropwizard-bundle-5x</module>
+        <!-- No kotlin 1.5 compatibility tests because
+            kotlin compiler 2.0.21 doesn't support JDK 25+ and
+            kotlin compiler 2.1.0+ doesn't support kotlin 1.5-->
+        <module>ktor-kotlin-1.6</module>
+        <module>ktor-kotlin-1.7</module>
+        <module>ktor-kotlin-1.8</module>
+        <module>ktor-kotlin-1.9</module>
+        <module>ktor-kotlin-2.0</module>
+        <module>ktor-kotlin-2.1</module>
+        <module>ktor-kotlin-2.2</module>
+        <module>ktor-kotlin-2.3</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- This module is purely for verifying and validating that the various dependency versions and build plugins are compatible
+                     with each other and activate automatically as designed; As a result, the contents do not need to be installed or published
+                     when the rest of the project is; they merely need to fail the build in the form of complication failures or test failures.
+                -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

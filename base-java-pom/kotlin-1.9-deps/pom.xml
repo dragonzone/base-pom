@@ -19,8 +19,9 @@
     <properties>
         <kotlin.version>1.9.24</kotlin.version>
         <kotlinx.coroutines.version>1.8.1</kotlinx.coroutines.version>
+        <kotlinx.io.verseion>0.3.4</kotlinx.io.verseion>
         <kotlinx.serialization.version>1.6.3</kotlinx.serialization.version>
-        <ktor.version>2.3.12</ktor.version>
+        <ktor.version>2.3.13</ktor.version>
         <assertk.version>0.28.1</assertk.version>
         <kotlin-logging.version>6.0.9</kotlin-logging.version>
         <mockito-kotlin.version>5.4.1</mockito-kotlin.version>
@@ -66,6 +67,16 @@
                 <version>${kotlinx.serialization.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-io-core-jvm</artifactId>
+                <version>${kotlinx.io.verseion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-io-bytestring-jvm</artifactId>
+                <version>${kotlinx.io.verseion}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>
