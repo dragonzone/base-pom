@@ -663,36 +663,6 @@
                         <artifactId>kotlin-maven-plugin</artifactId>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <extensions>true</extensions>
-                        <executions>
-                            <execution>
-                                <id>kotlin-kapt</id>
-                                <goals>
-                                    <goal>kapt</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>kotlin-compile</id>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                                <configuration>
-                                    <javaParameters>true</javaParameters>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>kotlin-test-kapt</id>
-                                <goals>
-                                    <goal>test-kapt</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>kotlin-test-compile</id>
-                                <goals>
-                                    <goal>test-kapt</goal>
-                                    <goal>test-compile</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                         <configuration>
                             <compilerPlugins>
                                 <plugin>kotlinx-serialization</plugin>
