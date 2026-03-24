@@ -72,6 +72,7 @@
             <dependency>
                 <groupId>ch.qos.logback.access</groupId>
                 <artifactId>logback-access-common</artifactId>
+                <version>${logback.access.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>jakarta.servlet</groupId>
