@@ -286,7 +286,7 @@
                     <groupId>org.sonatype.central</groupId>
                     <artifactId>central-publishing-maven-plugin</artifactId>
                     <configuration>
-                        <skipBundling>true</skipBundling>
+                        <skipPublishing>true</skipPublishing>
                     </configuration>
                 </plugin>
             </plugins>
