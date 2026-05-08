@@ -46,6 +46,8 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <!-- Library Versions -->
         <assertj.version>3.24.2</assertj.version>
+        <asm.version>9.9.1</asm.version>
+        <bytebuddy.version>1.18.7</bytebuddy.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
         <commons-codec.version>1.21.0</commons-codec.version>
         <commons-collections4.version>4.5.0</commons-collections4.version>
@@ -190,6 +192,18 @@
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${bytebuddy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-bom</artifactId>
+                <version>${asm.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- Apache Commons -->
             <dependency>
@@ -713,37 +727,6 @@
                             <execution>
                                 <id>attach-javadocs</id>
                                 <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>kotlin-js</id>
-            <activation>
-                <property>
-                    <name>kotlin-js.enable</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>kotlin-maven-plugin</artifactId>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <executions>
-                            <execution>
-                                <id>kotlin-js-compile</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>js</goal>
-                                </goals>
-                                <configuration>
-                                    <sourceDirs>${project.basedir}/src/main/kotlin</sourceDirs>  <!-- Replace with your path -->
-                                    <outputFile>${project.build.outputDirectory}/${project.artifactId}.js</outputFile>
-                                    <sourceMap>true</sourceMap>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
