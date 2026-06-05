@@ -38,6 +38,7 @@
         <module>ktor-kotlin-2.1</module>
         <module>ktor-kotlin-2.2</module>
         <module>ktor-kotlin-2.3</module>
+        <module>ktor-kotlin-2.4</module>
     </modules>
 
     <build>
