@@ -18,6 +18,7 @@
 
     <!-- Global Properties -->
     <properties>
+        <java.version>11</java.version>
         <dropwizard.version>3.0.0</dropwizard.version>
         <!-- Library Versions (Must be kept in sync with dropwizard-bom versions) -->
         <assertj.version>3.24.2</assertj.version>

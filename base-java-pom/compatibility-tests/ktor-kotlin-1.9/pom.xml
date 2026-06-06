@@ -17,6 +17,7 @@
 
     <properties>
         <kotlin.release>1.9</kotlin.release>
+        <kotlin.plugin.version>2.3.21</kotlin.plugin.version>
     </properties>
 
     <dependencies>

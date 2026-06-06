@@ -38,6 +38,7 @@
         <module>kotlin-2.1-deps</module>
         <module>kotlin-2.2-deps</module>
         <module>kotlin-2.3-deps</module>
+        <module>kotlin-2.4-deps</module>
     </modules>
 
     <!-- Global Properties -->
@@ -87,7 +88,7 @@
         <postgresql-driver.version>42.7.11</postgresql-driver.version>
         <protobuf.version>4.34.1</protobuf.version>
         <cassandra-driver.version>4.19.2</cassandra-driver.version>
-        <slf4j.version>2.0.17</slf4j.version>
+        <slf4j.version>2.0.18</slf4j.version>
         <jetbrains-annotations.version>26.1.0</jetbrains-annotations.version>
         <!-- Plugin Versions -->
         <error-prone.version>2.48.0</error-prone.version>
@@ -97,8 +98,8 @@
         <protobuf-plugin.version>5.0.2</protobuf-plugin.version>
         <!-- Kotlin -->
         <dokka.plugin.version>2.1.0</dokka.plugin.version>
-        <kotlin.plugin.version>2.3.20</kotlin.plugin.version>
-        <kotlin.release>2.3</kotlin.release>
+        <kotlin.plugin.version>2.4.0</kotlin.plugin.version>
+        <kotlin.release>2.4</kotlin.release>
     </properties>
 
     <dependencyManagement>
