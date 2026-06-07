@@ -39,7 +39,8 @@
         <junit5.version>5.9.2</junit5.version>
         <logback.version>1.4.6</logback.version>
         <metrics4.version>4.2.18</metrics4.version>
-        <mockito.version>5.2.0</mockito.version>
+        <!-- This should be version 5.2.0, but we've pushed it up to 5.21.0 to make it compatible with Java 25+ -->
+        <mockito.version>5.21.0</mockito.version>
         <slf4j.version>2.0.7</slf4j.version>
     </properties>
 
