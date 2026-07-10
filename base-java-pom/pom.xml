@@ -79,7 +79,7 @@
         <jetty.version>12.1.7</jetty.version>
         <junit4.version>4.13.2</junit4.version>
         <junit5.version>6.0.2</junit5.version>
-        <logback.version>1.5.32</logback.version>
+        <logback.version>1.5.35</logback.version>
         <logback.access.version>2.0.12</logback.access.version>
         <lombok.version>1.18.44</lombok.version>
         <mockito.version>5.23.0</mockito.version>
