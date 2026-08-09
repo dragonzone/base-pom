@@ -98,8 +98,8 @@
         <jacoco.plugin.version>0.8.14</jacoco.plugin.version>
         <protobuf-plugin.version>5.0.2</protobuf-plugin.version>
         <!-- Kotlin -->
-        <dokka.plugin.version>2.1.0</dokka.plugin.version>
-        <kotlin.plugin.version>2.4.0</kotlin.plugin.version>
+        <dokka.plugin.version>2.2.0</dokka.plugin.version>
+        <kotlin.plugin.version>2.4.10</kotlin.plugin.version>
         <kotlin.release>2.4</kotlin.release>
     </properties>
 
