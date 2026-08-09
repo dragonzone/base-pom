@@ -25,6 +25,7 @@
         <assertk.version>0.28.1</assertk.version>
         <kotlin-logging.version>8.0.4</kotlin-logging.version>
         <mockito-kotlin.version>6.3.0</mockito-kotlin.version>
+        <kotlin-dataframe.version>1.0.0-Beta5</kotlin-dataframe.version>
     </properties>
 
     <dependencyManagement>
@@ -67,6 +68,11 @@
                 <version>${kotlinx.serialization.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>dataframe</artifactId>
+                <version>${kotlin-dataframe.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
