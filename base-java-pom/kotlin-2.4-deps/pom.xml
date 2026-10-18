@@ -17,12 +17,12 @@
 
     <!-- Global Properties -->
     <properties>
-        <kotlin.version>2.4.10</kotlin.version>
+        <kotlin.version>2.4.21</kotlin.version>
         <kotlinx.coroutines.version>1.11.0</kotlinx.coroutines.version>
         <kotlinx.datetime.version>0.8.0-0.6.x-compat</kotlinx.datetime.version>
         <kotlinx.io.version>0.9.1</kotlinx.io.version>
         <kotlinx.serialization.version>1.11.0</kotlinx.serialization.version>
-        <ktor.version>3.5.2</ktor.version>
+        <ktor.version>3.6.0</ktor.version>
         <okio.version>3.17.0</okio.version>
         <assertk.version>0.28.1</assertk.version>
         <kotlin-logging.version>8.0.4</kotlin-logging.version>
