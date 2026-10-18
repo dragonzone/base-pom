@@ -19,6 +19,7 @@
     <properties>
         <kotlin.version>2.1.21</kotlin.version>
         <kotlinx.coroutines.version>1.10.2</kotlinx.coroutines.version>
+        <kotlinx.datetime.version>0.8.0</kotlinx.datetime.version>
         <kotlinx.io.version>0.7.0</kotlinx.io.version>
         <kotlinx.serialization.version>1.8.1</kotlinx.serialization.version>
         <ktor.version>3.2.3</ktor.version>
@@ -88,6 +89,11 @@
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-io-okio-jvm</artifactId>
                 <version>${kotlinx.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-datetime-jvm</artifactId>
+                <version>${kotlinx.datetime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>

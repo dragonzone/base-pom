@@ -20,6 +20,7 @@
         <kotlin.version>1.8.22</kotlin.version>
         <kotlinx.coroutines.version>1.7.3</kotlinx.coroutines.version>
         <kotlinx.serialization.version>1.5.1</kotlinx.serialization.version>
+        <kotlinx.datetime.version>0.4.1</kotlinx.datetime.version>
         <ktor.version>2.3.4</ktor.version>
         <assertk.version>0.26.1</assertk.version>
         <kotlin-logging.version>5.1.4</kotlin-logging.version>
@@ -66,6 +67,12 @@
                 <version>${kotlinx.serialization.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-datetime-jvm</artifactId>
+                <version>${kotlinx.datetime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>
