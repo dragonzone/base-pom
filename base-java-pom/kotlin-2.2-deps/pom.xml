@@ -23,6 +23,7 @@
         <kotlinx.io.version>0.8.2</kotlinx.io.version>
         <kotlinx.serialization.version>1.9.0</kotlinx.serialization.version>
         <ktor.version>3.3.3</ktor.version>
+        <okio.version>3.17.0</okio.version>
         <assertk.version>0.28.1</assertk.version>
         <kotlin-logging.version>8.0.4</kotlin-logging.version>
         <mockito-kotlin.version>6.3.0</mockito-kotlin.version>
@@ -67,6 +68,13 @@
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-serialization-bom</artifactId>
                 <version>${kotlinx.serialization.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio-bom</artifactId>
+                <version>${okio.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
