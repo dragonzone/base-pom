@@ -66,6 +66,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- slf4j-jcl was discontinued in SLF4J 2.x, so it is only managed by the SLF4J 1.7 based POMs -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jcl</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

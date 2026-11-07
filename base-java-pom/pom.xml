@@ -48,7 +48,7 @@
         <argLine/>
         <!-- Library Versions -->
         <assertj.version>3.27.7</assertj.version>
-        <asm.version>9.11</asm.version>
+        <asm.version>9.11.1</asm.version>
         <bytebuddy.version>1.18.15</bytebuddy.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
         <commons-codec.version>1.23.0</commons-codec.version>
@@ -57,8 +57,9 @@
         <commons-dbcp.version>2.14.0</commons-dbcp.version>
         <commons-email.version>1.6.0</commons-email.version>
         <commons-exec.version>1.6.0</commons-exec.version>
-        <commons-io.version>2.21.0</commons-io.version>
+        <commons-io.version>2.22.0</commons-io.version>
         <commons-lang3.version>3.21.0</commons-lang3.version>
+        <commons-logging.version>1.4.0</commons-logging.version>
         <commons-math3.version>3.6.1</commons-math3.version>
         <commons-pool2.version>2.13.1</commons-pool2.version>
         <commons-proxy.version>1.0</commons-proxy.version>
@@ -67,7 +68,7 @@
         <grpc.kotlin.version>1.5.0</grpc.kotlin.version>
         <guava.version>33.7.2-jre</guava.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <jackson2.version>2.22.3</jackson2.version>
+        <jackson2.version>2.22.4</jackson2.version>
         <jackson3.version>3.2.3</jackson3.version>
         <jakarta.activation-api.version>2.1.4</jakarta.activation-api.version>
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
@@ -79,13 +80,13 @@
         <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
         <jakarta.xml.bind-api.version>4.0.5</jakarta.xml.bind-api.version>
         <jaxb.runtime.version>4.0.9</jaxb.runtime.version>
-        <jetty.version>12.1.9</jetty.version>
+        <jetty.version>12.1.14</jetty.version>
         <junit4.version>4.13.2</junit4.version>
-        <junit5.version>6.0.2</junit5.version>
+        <junit5.version>6.1.3</junit5.version>
         <logback.version>1.6.5</logback.version>
         <logback.access.version>2.0.15</logback.access.version>
-        <lombok.version>1.18.44</lombok.version>
-        <mockito.version>5.23.0</mockito.version>
+        <lombok.version>1.18.48</lombok.version>
+        <mockito.version>5.24.0</mockito.version>
         <mongo-driver.version>5.13.0</mongo-driver.version>
         <mysql-driver.version>26.7.0</mysql-driver.version>
         <postgresql-driver.version>42.7.14</postgresql-driver.version>
@@ -95,13 +96,13 @@
         <jetbrains-annotations.version>26.1.0</jetbrains-annotations.version>
         <!-- Plugin Versions -->
         <error-prone.version>2.50.0</error-prone.version>
-        <jib.plugin.version>3.5.1</jib.plugin.version>
+        <jib.plugin.version>3.5.2</jib.plugin.version>
         <lombok.plugin.version>1.18.20.0</lombok.plugin.version>
-        <jacoco.plugin.version>0.8.14</jacoco.plugin.version>
-        <protobuf-plugin.version>5.0.2</protobuf-plugin.version>
+        <jacoco.plugin.version>0.8.15</jacoco.plugin.version>
+        <protobuf-plugin.version>5.1.11</protobuf-plugin.version>
         <!-- Kotlin -->
         <dokka.plugin.version>2.2.0</dokka.plugin.version>
-        <kotlin.plugin.version>2.4.10</kotlin.plugin.version>
+        <kotlin.plugin.version>2.4.21</kotlin.plugin.version>
         <kotlin.release>2.4</kotlin.release>
     </properties>
 
@@ -270,6 +271,16 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+            </dependency>
             <!-- Logback -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
@@ -340,11 +351,6 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>log4j-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-jcl</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
