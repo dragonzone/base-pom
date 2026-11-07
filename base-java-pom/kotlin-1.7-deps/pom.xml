@@ -19,8 +19,10 @@
     <properties>
         <kotlin.version>1.7.22</kotlin.version>
         <kotlinx.coroutines.version>1.6.4</kotlinx.coroutines.version>
+        <kotlinx.datetime.version>0.4.0</kotlinx.datetime.version>
         <kotlinx.serialization.version>1.4.1</kotlinx.serialization.version>
         <ktor.version>2.2.4</ktor.version>
+        <okio.version>3.2.0</okio.version>
         <assertk.version>0.25</assertk.version>
         <kotlin-logging.version>3.0.4</kotlin-logging.version>
         <mockito-kotlin.version>5.0.0</mockito-kotlin.version>
@@ -66,6 +68,18 @@
                 <version>${kotlinx.serialization.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio-bom</artifactId>
+                <version>${okio.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-datetime-jvm</artifactId>
+                <version>${kotlinx.datetime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>

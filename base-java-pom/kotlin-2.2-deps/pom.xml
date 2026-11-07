@@ -19,12 +19,15 @@
     <properties>
         <kotlin.version>2.2.21</kotlin.version>
         <kotlinx.coroutines.version>1.11.0</kotlinx.coroutines.version>
-        <kotlinx.io.verseion>0.8.2</kotlinx.io.verseion>
+        <kotlinx.datetime.version>0.8.0</kotlinx.datetime.version>
+        <kotlinx.io.version>0.8.2</kotlinx.io.version>
         <kotlinx.serialization.version>1.9.0</kotlinx.serialization.version>
         <ktor.version>3.3.3</ktor.version>
+        <okio.version>3.17.0</okio.version>
         <assertk.version>0.28.1</assertk.version>
         <kotlin-logging.version>8.0.4</kotlin-logging.version>
         <mockito-kotlin.version>6.3.0</mockito-kotlin.version>
+        <kotlin-dataframe.version>1.0.0-Beta5</kotlin-dataframe.version>
     </properties>
 
     <dependencyManagement>
@@ -69,19 +72,36 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio-bom</artifactId>
+                <version>${okio.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>dataframe</artifactId>
+                <version>${kotlin-dataframe.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-io-core-jvm</artifactId>
-                <version>${kotlinx.io.verseion}</version>
+                <version>${kotlinx.io.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-io-bytestring-jvm</artifactId>
-                <version>${kotlinx.io.verseion}</version>
+                <version>${kotlinx.io.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-io-okio-jvm</artifactId>
-                <version>${kotlinx.io.verseion}</version>
+                <version>${kotlinx.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-datetime-jvm</artifactId>
+                <version>${kotlinx.datetime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>
